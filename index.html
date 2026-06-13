@@ -4,1413 +4,829 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="color-scheme" content="dark" />
-  <title>ARENA SX — Competição. Resultado. Evolução.</title>
+  <title>Arena SX • XP Fractions</title>
   <style>
     :root{
-      --bg:#06070b;
-      --bg2:#0b0d16;
-      --card: rgba(255,255,255,.08);
-      --card2: rgba(255,255,255,.06);
-      --stroke: rgba(255,255,255,.12);
-      --stroke2: rgba(255,255,255,.18);
+      --bg0:#07070b;
+      --bg1:#0c0d14;
+      --card:rgba(255,255,255,.06);
+      --card2:rgba(255,255,255,.09);
+      --stroke:rgba(255,255,255,.10);
+      --stroke2:rgba(255,255,255,.14);
       --txt:#e9ecff;
-      --muted: rgba(233,236,255,.72);
-
-      --cyan:#33e6ff;
-      --violet:#a78bfa;
-      --pink:#ff3dd1;
-      --amber:#ffcc33;
-      --green:#35ff8a;
-      --red:#ff4b6b;
-
-      --shadow: 0 18px 60px rgba(0,0,0,.55);
-      --radius: 18px;
-      --radius2: 22px;
-
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      --mut:#aab0d6;
+      --bad:#ff5c7a;
+      --ok:#55f6b2;
+      --warn:#ffcc66;
+      --acc:#7aa7ff;
+      --acc2:#a47bff;
+      --shadow: 0 20px 60px rgba(0,0,0,.45);
+      --r:18px;
+      --r2:14px;
+      --pad:16px;
+      --pad2:12px;
+      --gap:12px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
     }
-
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
-      font-family: var(--sans);
-      color: var(--txt);
+      font-family:var(--sans);
+      color:var(--txt);
       background:
-        radial-gradient(1200px 700px at 12% -10%, rgba(51,230,255,.16), transparent 60%),
-        radial-gradient(900px 600px at 100% 0%, rgba(255,61,209,.14), transparent 55%),
-        radial-gradient(900px 600px at 30% 110%, rgba(167,139,250,.12), transparent 60%),
-        linear-gradient(180deg, var(--bg), var(--bg2));
+        radial-gradient(1200px 700px at 20% 10%, rgba(122,167,255,.18), transparent 60%),
+        radial-gradient(900px 500px at 85% 25%, rgba(164,123,255,.16), transparent 60%),
+        radial-gradient(900px 650px at 30% 95%, rgba(85,246,178,.10), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
       overflow-x:hidden;
     }
-
     a{color:inherit}
-    .wrap{max-width:1200px;margin:0 auto;padding:18px 14px 40px}
-    .topbar{
-      position:sticky; top:0; z-index:50;
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      background: rgba(6,7,11,.55);
-      border-bottom: 1px solid rgba(255,255,255,.08);
+    .wrap{max-width:1200px;margin:0 auto;padding:22px 16px 42px}
+    header{
+      display:flex; gap:12px; align-items:center; justify-content:space-between;
+      margin:10px 0 16px;
     }
-    .topbar-inner{max-width:1200px;margin:0 auto;padding:12px 14px;display:flex;gap:12px;align-items:center;justify-content:space-between}
     .brand{
-      display:flex;align-items:center;gap:12px;min-width: 240px;
+      display:flex; flex-direction:column; gap:4px;
     }
-    .logo{
-      width:42px;height:42px;border-radius:14px;
-      background:
-        radial-gradient(16px 16px at 30% 28%, rgba(51,230,255,.9), transparent 60%),
-        radial-gradient(18px 18px at 70% 75%, rgba(255,61,209,.85), transparent 60%),
-        linear-gradient(135deg, rgba(167,139,250,.9), rgba(51,230,255,.35));
-      box-shadow: 0 12px 40px rgba(51,230,255,.12), 0 18px 60px rgba(255,61,209,.10);
-      border: 1px solid rgba(255,255,255,.16);
+    .brand h1{
+      font-size:18px; letter-spacing:.3px; margin:0; font-weight:750;
     }
-    .brand h1{margin:0;font-size:14px;letter-spacing:.08em;text-transform:uppercase}
-    .brand .sub{margin:0;margin-top:2px;font-size:12px;color:var(--muted)}
-    .actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
-    .pill{
-      display:flex;align-items:center;gap:10px;
-      padding:10px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      box-shadow: var(--shadow);
-    }
-    .pill b{font-family:var(--mono);font-size:12px;letter-spacing:.02em}
-    .pill small{color:var(--muted)}
+    .brand p{margin:0;color:var(--mut);font-size:12.5px}
+    .top-actions{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
     .btn{
-      appearance:none;border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color: var(--txt);
-      padding:10px 12px;border-radius: 12px;
+      border:1px solid var(--stroke2);
+      background:linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.05));
+      color:var(--txt);
+      padding:10px 12px;
+      border-radius:999px;
       cursor:pointer;
-      transition: transform .12s ease, border-color .12s ease, background .12s ease;
-      display:inline-flex;gap:8px;align-items:center;justify-content:center;
-      text-decoration:none;
-    }
-    .btn:hover{transform: translateY(-1px);border-color: rgba(255,255,255,.22);background: rgba(255,255,255,.08)}
-    .btn:active{transform: translateY(0px)}
-    .btn.primary{
-      border-color: rgba(51,230,255,.26);
-      background: linear-gradient(135deg, rgba(51,230,255,.18), rgba(167,139,250,.14));
-    }
-    .btn.danger{
-      border-color: rgba(255,75,107,.35);
-      background: rgba(255,75,107,.10);
-    }
-    .btn.good{
-      border-color: rgba(53,255,138,.30);
-      background: rgba(53,255,138,.10);
-    }
-    .btn.small{padding:8px 10px;border-radius: 11px;font-size:12px}
-    .kbd{font-family:var(--mono);font-size:12px;color:rgba(233,236,255,.9);opacity:.9}
-    .grid{
-      display:grid;gap:14px;
-      grid-template-columns: 1.15fr .85fr;
-      margin-top:16px;
-    }
-    @media (max-width: 980px){
-      .grid{grid-template-columns: 1fr}
-      .brand{min-width:auto}
-    }
-
-    .card{
-      border-radius: var(--radius2);
-      border: 1px solid rgba(255,255,255,.12);
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
-    }
-    .card::before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(900px 280px at 40% 0%, rgba(51,230,255,.12), transparent 60%),
-                  radial-gradient(700px 260px at 90% 20%, rgba(255,61,209,.10), transparent 60%);
-      pointer-events:none;
-      filter: blur(0px);
-      opacity:.9;
-    }
-    .card > *{position:relative}
-    .card-h{
-      padding:14px 14px 10px;
-      display:flex;align-items:flex-start;justify-content:space-between;gap:10px;
-      border-bottom:1px solid rgba(255,255,255,.08);
-    }
-    .card-h h2{margin:0;font-size:13px;letter-spacing:.10em;text-transform:uppercase}
-    .card-h p{margin:4px 0 0;color:var(--muted);font-size:12px}
-    .card-b{padding:14px}
-    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .field{
-      flex:1 1 220px;
-      display:flex;flex-direction:column;gap:6px;
-    }
-    label{font-size:12px;color:var(--muted)}
-    input, select, textarea{
-      width:100%;
-      padding:11px 12px;
-      border-radius: 14px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.28);
-      color: var(--txt);
-      outline:none;
-    }
-    textarea{min-height:90px;resize:vertical}
-    input::placeholder{color:rgba(233,236,255,.45)}
-    .hint{font-size:12px;color:rgba(233,236,255,.6)}
-    .tabs{
-      display:flex; gap:8px; flex-wrap:wrap;
-      margin-top: 14px;
-    }
-    .tab{
-      padding:10px 12px;border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      cursor:pointer; user-select:none;
-      font-size:12px; color: rgba(233,236,255,.85);
-      transition: transform .12s ease, border-color .12s ease;
-    }
-    .tab:hover{transform: translateY(-1px);border-color: rgba(255,255,255,.22)}
-    .tab.active{
-      border-color: rgba(51,230,255,.28);
-      background: linear-gradient(135deg, rgba(51,230,255,.16), rgba(167,139,250,.12));
-      color: rgba(233,236,255,1);
-    }
-    .section{display:none}
-    .section.active{display:block}
-
-    .stats{
-      display:grid; gap:10px;
-      grid-template-columns: repeat(4, minmax(0,1fr));
-    }
-    @media (max-width: 720px){
-      .stats{grid-template-columns: repeat(2, minmax(0,1fr))}
-    }
-    .stat{
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      padding:12px;
-    }
-    .stat .k{font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
-    .stat .v{margin-top:6px;font-size:18px;font-family:var(--mono)}
-    .tag{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:7px 10px;border-radius:999px;font-size:12px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color: rgba(233,236,255,.9);
+      transition:transform .06s ease, background .2s ease, border-color .2s ease;
+      box-shadow: 0 8px 30px rgba(0,0,0,.25);
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:13px;
+      user-select:none;
       white-space:nowrap;
     }
-    .tag.good{border-color: rgba(53,255,138,.28); background: rgba(53,255,138,.10)}
-    .tag.bad{border-color: rgba(255,75,107,.34); background: rgba(255,75,107,.10)}
-    .tag.warn{border-color: rgba(255,204,51,.30); background: rgba(255,204,51,.10)}
-    .tag.future{border-color: rgba(167,139,250,.30); background: rgba(167,139,250,.10)}
-    .tag.live{border-color: rgba(51,230,255,.30); background: rgba(51,230,255,.10)}
-    .table{
-      width:100%;
-      border-collapse: separate;
-      border-spacing: 0 10px;
-    }
-    .table th{
-      text-align:left;
-      font-size:11px;
-      color: var(--muted);
-      letter-spacing:.09em;
-      text-transform:uppercase;
-      padding:0 10px 6px;
-    }
-    .table td{
-      padding:12px 10px;
-      background: rgba(255,255,255,.06);
-      border-top:1px solid rgba(255,255,255,.10);
-      border-bottom:1px solid rgba(255,255,255,.10);
-    }
-    .table tr td:first-child{
-      border-left:1px solid rgba(255,255,255,.10);
-      border-top-left-radius: 14px;
-      border-bottom-left-radius: 14px;
-    }
-    .table tr td:last-child{
-      border-right:1px solid rgba(255,255,255,.10);
-      border-top-right-radius: 14px;
-      border-bottom-right-radius: 14px;
-    }
-    .pos{
-      font-family: var(--mono);
-      font-weight:700;
-      letter-spacing:.02em;
-    }
-    .pos.p1{color: var(--amber)}
-    .pos.p2{color: rgba(233,236,255,.92)}
-    .pos.p3{color: rgba(255,204,51,.72)}
-    .mini{
-      font-size:12px;color: var(--muted)
-    }
-    .hr{
-      height:1px;background: rgba(255,255,255,.08);
-      margin:12px 0;
-    }
-    .glowline{
-      height:1px;
-      background: linear-gradient(90deg, transparent, rgba(51,230,255,.45), rgba(255,61,209,.35), transparent);
-      margin: 10px 0 14px;
-      opacity:.8;
-    }
-    .toast{
-      position: fixed;
-      bottom: 14px; left: 14px; right: 14px;
-      display:flex; justify-content:center;
-      pointer-events:none;
-      z-index:999;
-    }
-    .toast > div{
-      pointer-events:auto;
-      max-width: 760px;
-      width:100%;
-      padding: 12px 12px;
-      border-radius: 16px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(6,7,11,.72);
-      backdrop-filter: blur(14px);
+    .btn:hover{border-color:rgba(255,255,255,.22); background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06))}
+    .btn:active{transform:translateY(1px)}
+    .btn.primary{border-color:rgba(122,167,255,.35); background:linear-gradient(180deg, rgba(122,167,255,.18), rgba(255,255,255,.05))}
+    .btn.danger{border-color:rgba(255,92,122,.35); background:linear-gradient(180deg, rgba(255,92,122,.14), rgba(255,255,255,.05))}
+    .pill{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--stroke2);
+      background:rgba(0,0,0,.25);
+      backdrop-filter: blur(10px);
       box-shadow: var(--shadow);
-      display:flex;gap:10px;align-items:flex-start;justify-content:space-between;
+      min-width: 320px;
+      justify-content:space-between;
     }
-    .toast p{margin:0;font-size:13px;color: rgba(233,236,255,.92)}
-    .muted{color:var(--muted)}
+    .pill .left{display:flex; flex-direction:column; gap:2px}
+    .pill .k{font-size:11px;color:var(--mut)}
+    .pill .v{font-size:13px;font-weight:650}
     .badge{
-      font-family: var(--mono);
-      font-size: 11px;
-      padding:6px 8px;
-      border-radius: 999px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
+      font-size:11px;
+      border-radius:999px;
+      padding:6px 10px;
+      border:1px solid var(--stroke2);
+      background:rgba(255,255,255,.06);
+      color:var(--mut);
     }
-    .rightcol .card{position:sticky; top: 78px}
+    .badge.ok{border-color:rgba(85,246,178,.35); color:rgba(85,246,178,.95); background:rgba(85,246,178,.08)}
+    .badge.bad{border-color:rgba(255,92,122,.35); color:rgba(255,92,122,.95); background:rgba(255,92,122,.08)}
+    .grid{
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      gap:14px;
+      align-items:start;
+    }
     @media (max-width: 980px){
-      .rightcol .card{position:static}
+      .grid{grid-template-columns:1fr}
+      .pill{min-width:unset;width:100%}
+      header{flex-direction:column; align-items:stretch}
+      .top-actions{justify-content:space-between}
+    }
+    .card{
+      border:1px solid var(--stroke);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border-radius:var(--r);
+      padding:var(--pad);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+    .card h2{margin:0 0 10px; font-size:14px; letter-spacing:.2px}
+    .mut{color:var(--mut)}
+    .small{font-size:12px}
+    .sep{height:1px; background:rgba(255,255,255,.08); margin:12px 0}
+    .tabs{display:flex; gap:10px; flex-wrap:wrap}
+    .tab{
+      cursor:pointer;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.05);
+      font-size:13px;
+      color:var(--mut);
+      user-select:none;
+    }
+    .tab.active{
+      color:var(--txt);
+      border-color:rgba(122,167,255,.35);
+      background:rgba(122,167,255,.10);
+    }
+    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .field{display:flex; flex-direction:column; gap:6px; min-width:220px; flex:1}
+    label{font-size:11px; color:var(--mut)}
+    input, select, textarea{
+      width:100%;
+      padding:10px 10px;
+      border-radius:12px;
+      border:1px solid var(--stroke2);
+      background:rgba(0,0,0,.22);
+      color:var(--txt);
+      outline:none;
+    }
+    textarea{min-height:90px; font-family:var(--mono); font-size:12px}
+    table{width:100%; border-collapse:separate; border-spacing:0 10px}
+    th{font-size:11px; color:var(--mut); font-weight:600; text-align:left; padding:0 10px}
+    td{
+      padding:12px 10px;
+      border-top:1px solid rgba(255,255,255,.08);
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.04);
+    }
+    tr td:first-child{border-left:1px solid rgba(255,255,255,.08); border-top-left-radius:14px; border-bottom-left-radius:14px}
+    tr td:last-child{border-right:1px solid rgba(255,255,255,.08); border-top-right-radius:14px; border-bottom-right-radius:14px}
+    .right{text-align:right}
+    .mono{font-family:var(--mono)}
+    .hint{
+      border:1px dashed rgba(255,255,255,.18);
+      border-radius:14px;
+      padding:10px 12px;
+      background:rgba(0,0,0,.18);
+      color:var(--mut);
+      font-size:12px;
+      line-height:1.35;
+    }
+    .errbox{
+      border:1px solid rgba(255,92,122,.35);
+      background:rgba(255,92,122,.08);
+      padding:10px 12px;
+      border-radius:14px;
+      color:rgba(255,200,210,.95);
+      font-size:12px;
+      white-space:pre-wrap;
+      font-family:var(--mono);
+    }
+    .okbox{
+      border:1px solid rgba(85,246,178,.35);
+      background:rgba(85,246,178,.07);
+      padding:10px 12px;
+      border-radius:14px;
+      color:rgba(195,255,230,.95);
+      font-size:12px;
+      white-space:pre-wrap;
+      font-family:var(--mono);
     }
   </style>
 </head>
-
 <body>
-  <header class="topbar">
-    <div class="topbar-inner">
+  <div class="wrap">
+    <header>
       <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <div>
-          <h1>ARENA SX</h1>
-          <p class="sub">Competição. Resultado. Evolução.</p>
-        </div>
+        <h1>Arena SX • XP Fractions</h1>
+        <p>GitHub Pages • CSV + LocalStorage • Equipes (Promotor/Liner/Closer) + Sub-equipes (Parque/Externa)</p>
       </div>
 
-      <div class="actions">
-        <div class="pill" title="Arquivo esperado na raiz do GitHub Pages">
-          <div>
-            <small>Fonte de dados</small><br/>
-            <b>dados.csv</b>
+      <div class="top-actions">
+        <div class="pill" title="Status do carregamento do CSV">
+          <div class="left">
+            <div class="k">Fonte de dados</div>
+            <div class="v"><span class="mono">dados.csv</span></div>
           </div>
-          <span class="badge" id="dataStatus">…</span>
+          <div id="csvBadge" class="badge bad">ERRO</div>
         </div>
-        <button class="btn primary" id="btnReload">Recarregar CSV</button>
-        <button class="btn" id="btnResetLocal">Reset Local</button>
+        <button id="btnReload" class="btn primary">Recarregar CSV</button>
+        <button id="btnReset" class="btn danger">Reset Local</button>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <main class="wrap">
     <div class="grid">
-      <section class="leftcol">
-        <div class="card">
-          <div class="card-h">
-            <div>
-              <h2>App</h2>
-              <p>ARENA SX + BANCO XP FRACTIONS — tudo em uma experiência mobile-first.</p>
-            </div>
-            <div class="row">
-              <span class="tag live" id="tagLive">● AO VIVO</span>
-              <span class="tag" id="tagNow">Carregando…</span>
-            </div>
-          </div>
-
-          <div class="card-b">
-            <div class="tabs" id="tabs">
-              <div class="tab active" data-tab="arena">Arena / Competições</div>
-              <div class="tab" data-tab="bank">Banco XP</div>
-              <div class="tab" data-tab="rules">Regras de XP</div>
-              <div class="tab" data-tab="shop">Loja de Prêmios</div>
-              <div class="tab" data-tab="xp">Ranking XP</div>
-              <div class="tab" data-tab="admin">Admin</div>
-            </div>
-
-            <div class="glowline"></div>
-
-            <!-- ARENA -->
-            <section class="section active" id="sec-arena">
-              <div class="stats" id="arenaStats"></div>
-
-              <div class="hr"></div>
-
-              <div class="row">
-                <div class="field">
-                  <label>Competição</label>
-                  <select id="competitionSelect"></select>
-                </div>
-                <div class="field">
-                  <label>Filtro de período (opcional)</label>
-                  <select id="periodFilter">
-                    <option value="competition">Período da competição</option>
-                    <option value="today">Hoje</option>
-                    <option value="week">Semana</option>
-                    <option value="month">Mês</option>
-                    <option value="all">Geral (CSV inteiro)</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="hr"></div>
-
-              <div class="row" style="justify-content:space-between;align-items:flex-start">
-                <div>
-                  <div class="tag" id="compMeta">🎯 Meta: —</div>
-                  <div class="tag" id="compPrize" style="margin-left:6px">💰 Prêmio: —</div>
-                  <div class="tag" id="compStatus" style="margin-left:6px">Status: —</div>
-                </div>
-                <div class="row">
-                  <button class="btn small" id="btnSeedXP">Aplicar XP automático (demo)</button>
-                </div>
-              </div>
-
-              <div class="hr"></div>
-
-              <div class="row" id="podium" style="gap:8px;flex-wrap:wrap"></div>
-
-              <div class="hr"></div>
-
-              <div class="card" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.10)">
-                <div class="card-h">
-                  <div>
-                    <h2>Ranking em tempo real</h2>
-                    <p>Calculado do <span class="kbd">dados.csv</span> (e/ou regras do período selecionado).</p>
-                  </div>
-                  <div class="row">
-                    <span class="tag warn" id="trendUp">🔥 Subindo: —</span>
-                    <span class="tag bad" id="trendDown">⚠️ Caindo: —</span>
-                  </div>
-                </div>
-                <div class="card-b">
-                  <div style="overflow:auto">
-                    <table class="table" id="arenaTable">
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>Profissional</th>
-                          <th>Equipe</th>
-                          <th>Métrica</th>
-                          <th>VGV</th>
-                          <th>Vendas</th>
-                        </tr>
-                      </thead>
-                      <tbody></tbody>
-                    </table>
-                  </div>
-                  <p class="mini">Obs.: “Equipe” é inferida por <b>Promotor de marketing</b> (CSV) como agrupamento, por simplicidade.</p>
-                </div>
-              </div>
-
-              <div class="hr"></div>
-
-              <div class="card" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.10)">
-                <div class="card-h">
-                  <div>
-                    <h2>Histórico de campeões</h2>
-                    <p>Salvo localmente quando uma competição é encerrada no Admin.</p>
-                  </div>
-                </div>
-                <div class="card-b" id="championsHistory">
-                  <p class="muted">Nenhum campeão registrado ainda.</p>
-                </div>
-              </div>
-            </section>
-
-            <!-- BANK -->
-            <section class="section" id="sec-bank">
-              <div class="row">
-                <div class="field">
-                  <label>Selecione o profissional</label>
-                  <select id="proSelect"></select>
-                </div>
-                <div class="field">
-                  <label>Senha de gestor (opcional para ações admin)</label>
-                  <input id="adminPass" placeholder="Defina/Use a senha no módulo Admin" />
-                </div>
-              </div>
-
-              <div class="hr"></div>
-
-              <div class="stats" id="walletStats"></div>
-
-              <div class="hr"></div>
-
-              <div class="row">
-                <button class="btn good" id="btnDeposit">Depositar XP</button>
-                <button class="btn danger" id="btnWithdraw">Retirar XP</button>
-                <button class="btn" id="btnRequestPrize">Solicitar troca por prêmio</button>
-              </div>
-
-              <div class="hr"></div>
-
-              <div class="card" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.10)">
-                <div class="card-h">
-                  <div>
-                    <h2>Extrato</h2>
-                    <p>Movimentações com motivo, data/hora e aprovação.</p>
-                  </div>
-                  <div class="row">
-                    <button class="btn small" id="btnExport">Exportar JSON</button>
-                  </div>
-                </div>
-                <div class="card-b">
-                  <div style="overflow:auto">
-                    <table class="table" id="ledgerTable">
-                      <thead>
-                        <tr>
-                          <th>Data/Hora</th>
-                          <th>Tipo</th>
-                          <th>XP</th>
-                          <th>Motivo</th>
-                          <th>Solicitante</th>
-                          <th>Aprovado por</th>
-                          <th>Status</th>
-                        </tr>
-                      </thead>
-                      <tbody></tbody>
-                    </table>
-                  </div>
-                  <p class="mini">“Solicitar troca” cria uma movimentação pendente que o gestor aprova no Admin.</p>
-                </div>
-              </div>
-            </section>
-
-            <!-- RULES -->
-            <section class="section" id="sec-rules">
-              <div class="row" style="justify-content:space-between;align-items:flex-start">
-                <div>
-                  <h3 style="margin:0 0 6px;font-size:14px;letter-spacing:.08em;text-transform:uppercase">REGRAS DE XP</h3>
-                  <p class="muted" style="margin:0;font-size:12px">
-                    Regras positivas e negativas (manuais/automáticas). Configurável no Admin.
-                  </p>
-                </div>
-                <div class="row">
-                  <span class="tag good">POS +</span>
-                  <span class="tag bad">NEG -</span>
-                </div>
-              </div>
-
-              <div class="hr"></div>
-
-              <div class="row">
-                <div class="field">
-                  <label>Filtrar</label>
-                  <select id="rulesFilter">
-                    <option value="all">Todas</option>
-                    <option value="positive">Positivas</option>
-                    <option value="negative">Negativas</option>
-                    <option value="active">Apenas ativas</option>
-                    <option value="inactive">Apenas inativas</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="hr"></div>
-
-              <div id="rulesList"></div>
-            </section>
-
-            <!-- SHOP -->
-            <section class="section" id="sec-shop">
-              <div class="row" style="justify-content:space-between;align-items:flex-start">
-                <div>
-                  <h3 style="margin:0 0 6px;font-size:14px;letter-spacing:.08em;text-transform:uppercase">LOJA DE PRÊMIOS</h3>
-                  <p class="muted" style="margin:0;font-size:12px">Troque XP por prêmios (solicitação → aprovação do gestor).</p>
-                </div>
-                <div class="row">
-                  <span class="tag">BANCO XP FRACTIONS</span>
-                </div>
-              </div>
-
-              <div class="hr"></div>
-
-              <div id="shopGrid" class="stats" style="grid-template-columns: repeat(3, minmax(0,1fr));"></div>
-              <style>
-                @media (max-width: 900px){
-                  #shopGrid{grid-template-columns: repeat(2, minmax(0,1fr)) !important;}
-                }
-                @media (max-width: 520px){
-                  #shopGrid{grid-template-columns: 1fr !important;}
-                }
-              </style>
-            </section>
-
-            <!-- XP RANK -->
-            <section class="section" id="sec-xp">
-              <div class="row">
-                <div class="field">
-                  <label>Período</label>
-                  <select id="xpPeriod">
-                    <option value="today">Hoje</option>
-                    <option value="week">Semana</option>
-                    <option value="month" selected>Mês</option>
-                    <option value="all">Geral</option>
-                  </select>
-                </div>
-                <div class="field">
-                  <label>Por equipe (Promotor de marketing)</label>
-                  <select id="xpTeam">
-                    <option value="all">Todas</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="hr"></div>
-
-              <div style="overflow:auto">
-                <table class="table" id="xpTable">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Nome</th>
-                      <th>Equipe</th>
-                      <th>Saldo XP</th>
-                      <th>XP ganho (período)</th>
-                      <th>XP perdido (período)</th>
-                    </tr>
-                  </thead>
-                  <tbody></tbody>
-                </table>
-              </div>
-
-              <p class="mini">Foto: não existe no CSV; o app usa avatar “iniciais” (UI) por padrão.</p>
-            </section>
-
-            <!-- ADMIN -->
-            <section class="section" id="sec-admin">
-              <div class="row">
-                <div class="field">
-                  <label>Senha do gestor</label>
-                  <input id="adminPassSet" placeholder="Defina uma senha (fica no seu navegador)" />
-                </div>
-                <div class="field">
-                  <label>&nbsp;</label>
-                  <button class="btn primary" id="btnSetPass">Salvar senha</button>
-                </div>
-              </div>
-
-              <div class="hr"></div>
-
-              <div class="card" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.10)">
-                <div class="card-h">
-                  <div>
-                    <h2>Competições</h2>
-                    <p>Criar/encerrar competição e registrar campeão no histórico.</p>
-                  </div>
-                </div>
-                <div class="card-b">
-                  <div class="row">
-                    <div class="field">
-                      <label>Nome</label>
-                      <input id="cName" placeholder="Ex.: Sprint VGV Novembro" />
-                    </div>
-                    <div class="field">
-                      <label>Tipo</label>
-                      <select id="cType">
-                        <option>Competição por Casais</option>
-                        <option>Competição por Vendas</option>
-                        <option>Competição por VGV</option>
-                        <option>Competição por Equipe</option>
-                        <option>Competição Relâmpago</option>
-                        <option>Desafio Individual</option>
-                        <option>Desafio por Ponto</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="field">
-                      <label>Início</label>
-                      <input id="cStart" placeholder="YYYY-MM-DD" />
-                    </div>
-                    <div class="field">
-                      <label>Fim</label>
-                      <input id="cEnd" placeholder="YYYY-MM-DD" />
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="field">
-                      <label>Prêmio</label>
-                      <input id="cPrize" placeholder="Ex.: PIX R$ 200 + Voucher" />
-                    </div>
-                    <div class="field">
-                      <label>Meta</label>
-                      <input id="cMeta" placeholder="Ex.: 10 vendas / R$ 300k VGV" />
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="field">
-                      <label>Equipes participantes (separe por vírgula)</label>
-                      <input id="cTeams" placeholder="Ex.: FRANCISCO, SUENE, LINA" />
-                    </div>
-                    <div class="field">
-                      <label>Participantes (separe por vírgula; opcional)</label>
-                      <input id="cPros" placeholder="Ex.: AMANDA DORADO, RUTEMBERG CORREIA" />
-                    </div>
-                  </div>
-                  <div class="row">
-                    <button class="btn good" id="btnCreateComp">Criar competição</button>
-                  </div>
-
-                  <div class="hr"></div>
-
-                  <div class="row">
-                    <div class="field">
-                      <label>Encerrar competição</label>
-                      <select id="closeCompSelect"></select>
-                    </div>
-                    <div class="field">
-                      <label>&nbsp;</label>
-                      <button class="btn danger" id="btnCloseComp">Encerrar e registrar campeão</button>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
-              <div class="hr"></div>
-
-              <div class="card" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.10)">
-                <div class="card-h">
-                  <div>
-                    <h2>XP & Aprovações</h2>
-                    <p>Depositar/retirar/corrigir e aprovar trocas pendentes.</p>
-                  </div>
-                </div>
-                <div class="card-b">
-                  <div class="row">
-                    <div class="field">
-                      <label>Profissional</label>
-                      <select id="adminPro"></select>
-                    </div>
-                    <div class="field">
-                      <label>Tipo</label>
-                      <select id="adminXpType">
-                        <option value="deposit">Depositar</option>
-                        <option value="withdraw">Retirar</option>
-                        <option value="adjust">Corrigir saldo (define saldo)</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="field">
-                      <label>Valor (XP)</label>
-                      <input id="adminXpValue" placeholder="Ex.: 50" />
-                    </div>
-                    <div class="field">
-                      <label>Motivo</label>
-                      <input id="adminXpReason" placeholder="Ex.: Bateu meta semanal" />
-                    </div>
-                  </div>
-                  <div class="row">
-                    <button class="btn primary" id="btnAdminApply">Aplicar</button>
-                  </div>
-
-                  <div class="hr"></div>
-
-                  <div class="row" style="justify-content:space-between;align-items:flex-start">
-                    <div>
-                      <h3 style="margin:0 0 6px;font-size:13px;letter-spacing:.09em;text-transform:uppercase">Pendências</h3>
-                      <p class="muted" style="margin:0;font-size:12px">Solicitações de troca por prêmio (ou outras pendências).</p>
-                    </div>
-                  </div>
-
-                  <div class="hr"></div>
-
-                  <div id="pendingList"></div>
-                </div>
-              </div>
-
-              <div class="hr"></div>
-
-              <div class="card" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.10)">
-                <div class="card-h">
-                  <div>
-                    <h2>Regras & Loja</h2>
-                    <p>Adicionar regras e prêmios rapidamente.</p>
-                  </div>
-                </div>
-                <div class="card-b">
-                  <div class="row">
-                    <div class="field">
-                      <label>Regra — Nome</label>
-                      <input id="rName" placeholder="Ex.: + XP por venda realizada" />
-                    </div>
-                    <div class="field">
-                      <label>Tipo</label>
-                      <select id="rType">
-                        <option value="positive">Positivo</option>
-                        <option value="negative">Negativo</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="field">
-                      <label>XP</label>
-                      <input id="rXP" placeholder="Ex.: 20" />
-                    </div>
-                    <div class="field">
-                      <label>Automática?</label>
-                      <select id="rAuto">
-                        <option value="manual">Manual</option>
-                        <option value="auto">Automática</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="field">
-                      <label>Quem pode aplicar</label>
-                      <input id="rWho" placeholder="Ex.: Gestor" />
-                    </div>
-                    <div class="field">
-                      <label>Status</label>
-                      <select id="rStatus">
-                        <option value="active">Ativa</option>
-                        <option value="inactive">Inativa</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="field">
-                      <label>Descrição</label>
-                      <textarea id="rDesc" placeholder="Descreva quando aplicar…"></textarea>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <button class="btn good" id="btnAddRule">Adicionar regra</button>
-                  </div>
-
-                  <div class="hr"></div>
-
-                  <div class="row">
-                    <div class="field">
-                      <label>Prêmio — Nome</label>
-                      <input id="pName" placeholder="Ex.: PIX R$ 50" />
-                    </div>
-                    <div class="field">
-                      <label>Valor (XP)</label>
-                      <input id="pCost" placeholder="Ex.: 300" />
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="field">
-                      <label>Quantidade disponível</label>
-                      <input id="pQty" placeholder="Ex.: 10" />
-                    </div>
-                    <div class="field">
-                      <label>Status</label>
-                      <select id="pStatus">
-                        <option value="active">Ativo</option>
-                        <option value="inactive">Inativo</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <button class="btn primary" id="btnAddPrize">Adicionar prêmio</button>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
+      <aside class="card">
+        <h2>Navegação</h2>
+        <div class="tabs" id="tabs">
+          <div class="tab active" data-tab="ranking">Ranking</div>
+          <div class="tab" data-tab="equipes">Admin • Equipes</div>
+          <div class="tab" data-tab="config">Admin • Config CSV</div>
+          <div class="tab" data-tab="diagnostico">Diagnóstico</div>
         </div>
-      </section>
 
-      <!-- RIGHT COL -->
-      <aside class="rightcol">
-        <div class="card">
-          <div class="card-h">
-            <div>
-              <h2>Resumo da operação</h2>
-              <p>Do CSV: atendimentos, vendas e VGV. + XP local.</p>
-            </div>
-          </div>
-          <div class="card-b">
-            <div class="stats" id="globalStats" style="grid-template-columns:repeat(2,minmax(0,1fr))"></div>
-            <div class="hr"></div>
-            <div class="row" style="justify-content:space-between">
-              <span class="tag">BANCO XP FRACTIONS</span>
-              <span class="tag future" id="localInfo">LocalStorage ON</span>
-            </div>
-            <div class="hr"></div>
-            <p class="mini">
-              Dica GitHub Pages: o CSV precisa estar público e no mesmo caminho do <span class="kbd">index.html</span>.
-            </p>
-          </div>
+        <div class="sep"></div>
+
+        <div class="hint">
+          <b>Como publicar:</b> coloque <span class="mono">index.html</span> e <span class="mono">dados.csv</span> na raiz do repositório e ative o GitHub Pages.<br>
+          <b>Dica:</b> se o CSV vier com <span class="mono">;</span> como separador, este app detecta automaticamente.
         </div>
       </aside>
-    </div>
-  </main>
 
-  <div class="toast" id="toast" style="display:none">
-    <div>
-      <p id="toastMsg"></p>
-      <button class="btn small" id="toastClose">Fechar</button>
+      <main class="card">
+        <!-- Ranking -->
+        <section id="view-ranking">
+          <h2>Ranking • Casais (1 linha = 1 casal)</h2>
+
+          <div class="row">
+            <div class="field">
+              <label>Equipe</label>
+              <select id="fltEquipe">
+                <option value="">Todas</option>
+                <option value="Promotor de marketing">Promotor de marketing</option>
+                <option value="Liner">Liner</option>
+                <option value="Closer">Closer</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Subequipe (somente Promotor)</label>
+              <select id="fltSubequipe">
+                <option value="">Todas</option>
+                <option value="Equipe Parque">Equipe Parque</option>
+                <option value="Equipe Externa">Equipe Externa</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Busca por profissional</label>
+              <input id="fltBusca" placeholder="Ex.: João, Maria..." />
+            </div>
+          </div>
+
+          <div class="sep"></div>
+
+          <div id="rankingMeta" class="small mut"></div>
+
+          <div style="overflow:auto; margin-top:10px">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Profissional</th>
+                  <th>Equipe</th>
+                  <th>Subequipe</th>
+                  <th class="right">Casais</th>
+                </tr>
+              </thead>
+              <tbody id="tblRanking"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Equipes admin -->
+        <section id="view-equipes" style="display:none">
+          <h2>Admin • Equipes e Subequipes</h2>
+          <div class="hint">
+            Aqui você define a <b>subequipe</b> dos profissionais do cargo <b>Promotor de marketing</b> sem alterar o CSV.
+          </div>
+
+          <div class="sep"></div>
+
+          <div class="row">
+            <div class="field">
+              <label>Profissional (nome exato como aparece no CSV)</label>
+              <input id="eqNome" placeholder="Ex.: Fulano de Tal" />
+            </div>
+            <div class="field">
+              <label>Equipe (macro)</label>
+              <select id="eqEquipe">
+                <option value="Promotor de marketing">Promotor de marketing</option>
+                <option value="Liner">Liner</option>
+                <option value="Closer">Closer</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Subequipe (se Promotor)</label>
+              <select id="eqSubequipe">
+                <option value="">—</option>
+                <option value="Equipe Parque">Equipe Parque</option>
+                <option value="Equipe Externa">Equipe Externa</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:10px">
+            <button id="btnSalvarEquipe" class="btn primary">Salvar</button>
+            <button id="btnImportarNomes" class="btn">Preencher lista com nomes do CSV</button>
+          </div>
+
+          <div class="sep"></div>
+
+          <div class="row">
+            <div class="field" style="min-width: 320px;">
+              <label>Cadastros (JSON) • (localStorage)</label>
+              <textarea id="eqJson" spellcheck="false"></textarea>
+              <div class="row">
+                <button id="btnAplicarJson" class="btn">Aplicar JSON</button>
+                <button id="btnLimparEq" class="btn danger">Limpar cadastros</button>
+              </div>
+              <div class="small mut">Formato: <span class="mono">{"NOME":{"equipe":"Promotor de marketing","subequipe":"Equipe Parque"}}</span></div>
+            </div>
+
+            <div class="field">
+              <label>Nomes encontrados no CSV (para copiar/colar)</label>
+              <textarea id="eqNomesCsv" spellcheck="false" readonly></textarea>
+              <div class="small mut">Dica: copie um nome e cole no campo “Profissional”.</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Config -->
+        <section id="view-config" style="display:none">
+          <h2>Admin • Configuração do CSV</h2>
+          <div class="hint">
+            Como cada operação é 1 linha (= 1 casal), o ranking depende de qual coluna representa o <b>responsável/profissional</b> e (opcionalmente) a <b>equipe/cargo</b> e a <b>data</b>.<br>
+            Ajuste abaixo conforme o cabeçalho do seu <span class="mono">dados.csv</span>.
+          </div>
+
+          <div class="sep"></div>
+
+          <div class="row">
+            <div class="field">
+              <label>Coluna do Profissional (obrigatório)</label>
+              <input id="cfgColProf" placeholder="Ex.: Promotor de marketing / Profissional / Responsável" />
+            </div>
+            <div class="field">
+              <label>Coluna da Equipe/Cargo (opcional)</label>
+              <input id="cfgColEquipe" placeholder="Ex.: Cargo / Função / Equipe" />
+            </div>
+            <div class="field">
+              <label>Coluna de Data (opcional)</label>
+              <input id="cfgColData" placeholder="Ex.: Data / Criado em" />
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:10px">
+            <button id="btnSalvarCfg" class="btn primary">Salvar configuração</button>
+            <button id="btnAutoDetect" class="btn">Tentar auto-detectar colunas</button>
+          </div>
+
+          <div class="sep"></div>
+
+          <div class="small mut">Cabeçalhos detectados no CSV:</div>
+          <div id="cfgHeaders" class="okbox" style="display:none"></div>
+          <div id="cfgHeadersErr" class="errbox" style="display:none"></div>
+        </section>
+
+        <!-- Diagnostico -->
+        <section id="view-diagnostico" style="display:none">
+          <h2>Diagnóstico do CSV</h2>
+          <div class="row">
+            <button id="btnTestCsv" class="btn primary">Testar carregamento</button>
+            <button id="btnShowSample" class="btn">Mostrar amostra (10 linhas)</button>
+          </div>
+
+          <div class="sep"></div>
+
+          <div id="diagOut"></div>
+          <div id="diagSample" class="okbox" style="display:none; margin-top:10px"></div>
+        </section>
+      </main>
     </div>
   </div>
 
 <script>
-/** =========================
- *  ARENA SX — Single-file app
- *  - Reads dados.csv (semicolon separated)
- *  - Builds competitions + rankings
- *  - XP bank with localStorage
- *  ========================= */
+(() => {
+  const LS_KEYS = {
+    teamMap: "arena_team_map_v1",
+    csvCfg: "arena_csv_cfg_v1"
+  };
 
-const CSV_URL = "./dados.csv";
-const LS_KEY = "arena_sx_v1";
-
-const $ = (s, el=document)=> el.querySelector(s);
-const $$
-= (s, el=document)=> Array.from(el.querySelectorAll(s)); function nowISO(){ const d = new Date(); const pad = (n)=> String(n).padStart(2,'0'); return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`; } function toBRDateTime(iso){ try{ const d = new Date(iso); return d.toLocaleString("pt-BR"); }catch{ return iso; } } function parseBRDate(ddmmyyyy){ // "23/10/2025" -> Date if(!ddmmyyyy) return null; const m = String(ddmmyyyy).trim().match(/^(\d{2})\/(\d{2})\/(\d{4})$/); if(!m) return null; const [_, dd, mm, yyyy] = m; return new Date(Number(yyyy), Number(mm)-1, Number(dd), 12, 0, 0, 0); } function parseMoneyBR(v){ // handles "R$ 15.000,00" or "470000,78" or "0" if(v == null) return 0; let s = String(v).trim(); if(!s) return 0; s = s.replace(/\s/g,'').replace(/^R\$/i,''); // if contains '.' as thousand and ',' decimal -> remove thousand '.' and change ',' to '.' if(s.includes(',') && (s.match(/\./g)||[]).length >= 1){ s = s.replace(/\./g,'').replace(',', '.'); } else if(s.includes(',') && !s.includes('.')){ // "470000,78" s = s.replace(',', '.'); } s = s.replace(/[^\d.-]/g,''); const n = Number(s); return Number.isFinite(n) ? n : 0; } function fmtInt(n){ return new Intl.NumberFormat("pt-BR").format(Math.round(n||0)); } function fmtMoney(n){ return new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"}).format(Number(n||0)); } function toast(msg){ $("#toastMsg").textContent = msg; $("#toast").style.display = "flex"; } $("#toastClose").onclick = ()=> $("#toast").style.display = "none"; function defaultState(){ return { adminPassHash: null, // simple hash competitions: [ { id: crypto.randomUUID(), name: "VGV — Geral (CSV)", type: "Competição por VGV", start: "2025-10-01", end: "2026-12-31", prize: "Troféu + Reconhecimento", meta: "Maior VGV no período", teams: [], pros: [], status: "ativa" }, { id: crypto.randomUUID(), name: "Vendas — Geral (CSV)", type: "Competição por Vendas", start: "2025-10-01", end: "2026-12-31", prize: "Troféu + Reconhecimento", meta: "Maior número de vendas no período", teams: [], pros: [], status: "ativa" }, { id: crypto.randomUUID(), name: "Casais — Geral (CSV)", type: "Competição por Casais", start: "2025-10-01", end: "2026-12-31", prize: "Troféu + Reconhecimento", meta: "Maior número de casais (atendimentos) no período", teams: [], pros: [], status: "ativa" } ], champions: [], rules: [ { id: crypto.randomUUID(), name:"+ XP por venda realizada", type:"positive", xp: 30, mode:"auto", who:"Sistema", desc:"Cada venda (Valor vendido > 0) gera XP.", status:"active" }, { id: crypto.randomUUID(), name:"+ XP por casal qualificado", type:"positive", xp: 10, mode:"auto", who:"Sistema", desc:"Cada atendimento com Qualificação = Q gera XP.", status:"active" }, { id: crypto.randomUUID(), name:"- XP por falta", type:"negative", xp: 50, mode:"manual", who:"Gestor", desc:"Aplicar em caso de falta.", status:"active" } ], prizes: [ { id: crypto.randomUUID(), name:"Voucher", cost: 250, qty: 20, status:"active" }, { id: crypto.randomUUID(), name:"PIX", cost: 600, qty: 10, status:"active" }, { id: crypto.randomUUID(), name:"Folga", cost: 900, qty: 5, status:"active" }, { id: crypto.randomUUID(), name:"Almoço", cost: 350, qty: 15, status:"active" }, { id: crypto.randomUUID(), name:"Boliche", cost: 500, qty: 10, status:"active" }, { id: crypto.randomUUID(), name:"Vale presente", cost: 700, qty: 8, status:"active" }, { id: crypto.randomUUID(), name:"Prêmio surpresa", cost: 800, qty: 6, status:"active" }, { id: crypto.randomUUID(), name:"Experiência especial", cost: 1200, qty: 3, status:"active" } ], xp: { base: 500, wallets: { // "NOME": { balance, ledger: [{id, ts, type, amount, reason, requester, approver, status, ref}] } } } }; } function loadState(){ const raw = localStorage.getItem(LS_KEY); if(!raw){ const s = defaultState(); localStorage.setItem(LS_KEY, JSON.stringify(s)); return s; } try{ const s = JSON.parse(raw); // minimal migration guards if(!s.competitions) s.competitions = []; if(!s.champions) s.champions = []; if(!s.rules) s.rules = []; if(!s.prizes) s.prizes = []; if(!s.xp) s.xp = {base:500, wallets:{}}; if(!s.xp.wallets) s.xp.wallets = {}; if(!("base" in s.xp)) s.xp.base = 500; return s; }catch{ const s = defaultState(); localStorage.setItem(LS_KEY, JSON.stringify(s)); return s; } } function saveState(){ localStorage.setItem(LS_KEY, JSON.stringify(state)); } function hashPass(p){ // lightweight hash (not secure; local-only) let h = 2166136261; for(let i=0;i<p.length;i++){ h ^= p.charCodeAt(i); h = Math.imul(h, 16777619); } return (h>>>0).toString(16); } function isAdmin(){ const p = ($("#adminPass").value || "").trim(); if(!p || !state.adminPassHash) return false; return hashPass(p) === state.adminPassHash; } function requireAdmin(){ if(!state.adminPassHash){ toast("Defina uma senha no módulo Admin para habilitar ações de gestor."); return false; } if(!isAdmin()){ toast("Ação de gestor: informe a senha correta (no Banco XP ou no Admin)."); return false; } return true; } /** CSV parsing */ function parseCSV(text){ // semicolon separated, first line headers const lines = text.split(/\r?\n/).filter(l=>l.trim().length); if(lines.length<2) return []; const headers = lines[0].split(";").map(h=>h.trim()); return lines.slice(1).map(line=>{ const cols = line.split(";"); const obj = {}; headers.forEach((h,i)=> obj[h] = (cols[i] ?? "").trim()); return obj; }); } let state = loadState(); let csvRows = []; let pros = [];     // professionals list from Liner + Closer + Promotor? We'll use Liner/Closer for rankings. let teams = [];    // unique promotor de marketing let lastRankByComp = {}; // for trend function canonicalName(s){ return String(s||"").trim().replace(/\s+/g," ").toUpperCase(); } function ensureWallet(name, team){ const key = canonicalName(name); if(!key) return null; if(!state.xp.wallets[key]){ state.xp.wallets[key] = { name:key, team: team || "", balance: state.xp.base, ledger: [] }; saveState(); }else{ if(team && !state.xp.wallets[key].team) state.xp.wallets[key].team = team; } return state.xp.wallets[key]; } function addLedger(name, entry){ const w = ensureWallet(name, entry.team); if(!w) return; w.ledger.unshift(entry); // Recompute balance based on base + approved entries + approved adjustments recomputeWallet(w); saveState(); } function recomputeWallet(w){ let bal = state.xp.base; for(const e of w.ledger){ if(e.status !== "approved") continue; if(e.type === "deposit") bal += e.amount; else if(e.type === "withdraw") bal -= e.amount; else if(e.type === "adjust"){ // adjust defines absolute balance; apply immediately bal = e.amount; } else if(e.type === "redeem"){ bal -= e.amount; // amount = cost } } w.balance = bal; } function walletPeriodSums(w, period){ const rng = getPeriodRange(period); let gained = 0, lost = 0; for(const e of w.ledger){ if(e.status !== "approved") continue; const t = new Date(e.ts).getTime(); if(rng && (t<rng.start || t>rng.end)) continue; if(e.type === "deposit") gained += e.amount; if(e.type === "withdraw") lost += e.amount; if(e.type === "redeem") lost += e.amount; // adjust is not categorized } return {gained, lost}; } function getPeriodRange(period){ const now = new Date(); const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0,0,0,0).getTime(); const endOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23,59,59,999).getTime(); if(period==="today") return {start:startOfDay, end:endOfDay}; if(period==="week"){ const day = (now.getDay()+6)%7; // Monday=0 const s = new Date(now.getFullYear(), now.getMonth(), now.getDate()-day, 0,0,0,0).getTime(); const e = new Date(now.getFullYear(), now.getMonth(), now.getDate()+(6-day), 23,59,59,999).getTime(); return {start:s,end:e}; } if(period==="month"){ const s = new Date(now.getFullYear(), now.getMonth(), 1, 0,0,0,0).getTime(); const e = new Date(now.getFullYear(), now.getMonth()+1, 0, 23,59,59,999).getTime(); return {start:s,end:e}; } if(period==="all") return null; return null; } /** Competition ranking from CSV */ function compStatus(comp){ const today = new Date(); const s = new Date(comp.start+"T00:00:00"); const e = new Date(comp.end+"T23:59:59"); if(today < s) return "futura"; if(today > e) return "encerrada"; return "ativa"; } function filterRowsByRange(rows, startISO, endISO){ const s = new Date(startISO+"T00:00:00").getTime(); const e = new Date(endISO+"T23:59:59").getTime(); return rows.filter(r=>{ const d = parseBRDate(r["Data de atendimento"]); if(!d) return false; const t = d.getTime(); return t>=s && t<=e; }); } function rowsForPeriod(rows, period, comp){ if(period==="competition"){ return filterRowsByRange(rows, comp.start, comp.end); } const rng = getPeriodRange(period); if(!rng) return rows; return rows.filter(r=>{ const d = parseBRDate(r["Data de atendimento"]); if(!d) return false; const t = d.getTime(); return t>=rng.start && t<=rng.end; }); } function computeRanking(comp, period){ let rows = rowsForPeriod(csvRows, period, comp); // optional filters by teams/pros const teamSet = new Set((comp.teams||[]).map(t=>canonicalName(t)).filter(Boolean)); const proSet = new Set((comp.pros||[]).map(p=>canonicalName(p)).filter(Boolean)); const metricBy = comp.type; // helper: infer team from Promotor de marketing const getTeam = (r)=> canonicalName(r["Promotor de marketing"]||""); const getCasalKey = (r)=> canonicalName(r["Nome 1"]||"") + " + " + canonicalName(r["Nome 2"]||""); const liner = (r)=> canonicalName(r["Liner"]||""); const closer = (r)=> canonicalName(r["Closer"]||""); // aggregate per participant const agg = new Map(); function addPerson(person, team, delta){ if(!person) return; if(teamSet.size && !teamSet.has(team)) return; if(proSet.size && !proSet.has(person)) return; const cur = agg.get(person) || {name:person, team, metric:0, vgv:0, sales:0, casais:0}; cur.team = cur.team || team; cur.metric += delta.metric || 0; cur.vgv += delta.vgv || 0; cur.sales += delta.sales || 0; cur.casais += delta.casais || 0; agg.set(person, cur); } if(metricBy === "Competição por Equipe"){ // aggregate by team const teamAgg = new Map(); for(const r of rows){ const team = getTeam(r) || "SEM EQUIPE"; if(teamSet.size && !teamSet.has(team)) continue; const vgv = parseMoneyBR(r["Valor vendido"]); const sales = vgv > 0 ? 1 : 0; const casais = 1; const cur = teamAgg.get(team) || {name:team, team:team, metric:0, vgv:0, sales:0, casais:0}; cur.vgv += vgv; cur.sales += sales; cur.casais += casais; // define "metric" as combined score (weighted) for team competition cur.metric = cur.sales*100 + cur.casais*10 + cur.vgv/1000; teamAgg.set(team, cur); } return Array.from(teamAgg.values()).sort((a,b)=> b.metric - a.metric); } if(metricBy === "Competição por VGV"){ for(const r of rows){ const team = getTeam(r); const vgv = parseMoneyBR(r["Valor vendido"]); addPerson(liner(r), team, {metric: vgv, vgv, sales: vgv>0?1:0, casais:1}); addPerson(closer(r), team, {metric: vgv, vgv, sales: vgv>0?1:0, casais:1}); } } else if(metricBy === "Competição por Vendas"){ for(const r of rows){ const team = getTeam(r); const vgv = parseMoneyBR(r["Valor vendido"]); const sale = vgv>0 ? 1 : 0; addPerson(liner(r), team, {metric: sale, vgv, sales: sale, casais:1}); addPerson(closer(r), team, {metric: sale, vgv, sales: sale, casais:1}); } } else if(metricBy === "Competição por Casais"){ for(const r of rows){ const team = getTeam(r); const vgv = parseMoneyBR(r["Valor vendido"]); addPerson(liner(r), team, {metric: 1, vgv, sales: vgv>0?1:0, casais:1}); addPerson(closer(r), team, {metric: 1, vgv, sales: vgv>0?1:0, casais:1}); } } else if(metricBy === "Desafio por Ponto"){ // using Local Captação as participant const capAgg = new Map(); for(const r of rows){ const cap = canonicalName(r["Local Captação"]||"") || "SEM PONTO"; const vgv = parseMoneyBR(r["Valor vendido"]); const sale = vgv>0?1:0; const cur = capAgg.get(cap) || {name:cap, team:"PONTO", metric:0, vgv:0, sales:0, casais:0}; cur.metric += 1; cur.vgv += vgv; cur.sales += sale; cur.casais += 1; capAgg.set(cap, cur); } return Array.from(capAgg.values()).sort((a,b)=> b.metric - a.metric); } else if(metricBy === "Desafio Individual"){ // expects two pros in comp.pros; metric is sales by default for(const r of rows){ const team = getTeam(r); const vgv = parseMoneyBR(r["Valor vendido"]); const sale = vgv>0?1:0; addPerson(liner(r), team, {metric: sale, vgv, sales: sale, casais:1}); addPerson(closer(r), team, {metric: sale, vgv, sales: sale, casais:1}); } } else if(metricBy === "Competição Relâmpago"){ // treat as sales for(const r of rows){ const team = getTeam(r); const vgv = parseMoneyBR(r["Valor vendido"]); const sale = vgv>0?1:0; addPerson(liner(r), team, {metric: sale, vgv, sales: sale, casais:1}); addPerson(closer(r), team, {metric: sale, vgv, sales: sale, casais:1}); } } else { // default: VGV for(const r of rows){ const team = getTeam(r); const vgv = parseMoneyBR(r["Valor vendido"]); addPerson(liner(r), team, {metric: vgv, vgv, sales: vgv>0?1:0, casais:1}); addPerson(closer(r), team, {metric: vgv, vgv, sales: vgv>0?1:0, casais:1}); } } return Array.from(agg.values()) .filter(x=>x.name && x.name !== "SN") .sort((a,b)=> (b.metric - a.metric) || (b.vgv - a.vgv) || (b.sales - a.sales)); } function metricLabel(comp){ if(comp.type==="Competição por VGV") return "VGV"; if(comp.type==="Competição por Vendas") return "Vendas"; if(comp.type==="Competição por Casais") return "Casais"; if(comp.type==="Competição por Equipe") return "Score"; if(comp.type==="Desafio por Ponto") return "Casais"; if(comp.type==="Desafio Individual") return "Vendas"; if(comp.type==="Competição Relâmpago") return "Vendas"; return "Métrica"; } function renderArena(){ const compId = $("#competitionSelect").value; const comp = state.competitions.find(c=>c.id===compId) || state.competitions[0]; const period = $("#periodFilter").value; const status = compStatus(comp); $("#compStatus").textContent = `Status: ${status.toUpperCase()}`; $("#compStatus").className = "tag " + (status==="ativa"?"live":status==="futura"?"future":"warn"); $("#compMeta").textContent = `🎯 Meta: ${comp.meta || "—"}`; $("#compPrize").textContent = `💰 Prêmio: ${comp.prize || "—"}`; // stats const ranks = computeRanking(comp, period); const top = ranks.slice(0,3); const champ = top[0]?.name || "—"; const mLabel = metricLabel(comp); const stats = [ {k:"Competição", v: comp.name}, {k:"Tipo", v: comp.type}, {k:"Campeão atual", v: champ}, {k:`Top 1 (${mLabel})`, v: top[0] ? fmtInt(top[0].metric) : "—"} ]; $("#arenaStats").innerHTML = stats.map(s=>` <div class="stat"> <div class="k">${escapeHTML(s.k)}</div> <div class="v" title="${escapeHTML(String(s.v))}">${escapeHTML(trunc(String(s.v), 32))}</div> </div> `).join(""); // podium $("#podium").innerHTML = ` <span class="tag good">🏆 Campeão atual: <b>${escapeHTML(champ)}</b></span> <span class="tag">🥇 1º: ${escapeHTML(top[0]?.name || "—")}</span> <span class="tag">🥈 2º: ${escapeHTML(top[1]?.name || "—")}</span> <span class="tag">🥉 3º: ${escapeHTML(top[2]?.name || "—")}</span> `; // trend compare with last render per comp+period const key = comp.id + "::" + period; const prev = lastRankByComp[key] || []; const prevPos = new Map(prev.map((x,i)=>[x.name, i+1])); const curPos = new Map(ranks.map((x,i)=>[x.name, i+1])); let up = null, down = null; for(const [name, pos] of curPos.entries()){ const p = prevPos.get(name); if(p && p-pos >= 2){ up = name; break; } } for(const [name, pos] of curPos.entries()){ const p = prevPos.get(name); if(p && pos-p >= 2){ down = name; break; } } $("#trendUp").textContent = `🔥 Subindo: ${up || "—"}`; $("#trendDown").textContent = `⚠️ Caindo: ${down || "—"}`; lastRankByComp[key] = ranks.slice(0, 50); // table const tbody = $("#arenaTable tbody"); tbody.innerHTML = ranks.slice(0, 25).map((r, idx)=>` <tr> <td class="pos ${idx===0?'p1':idx===1?'p2':idx===2?'p3':''}">${idx+1}</td> <td><b>${escapeHTML(r.name)}</b><div class="mini">${escapeHTML(comp.type)}</div></td> <td>${escapeHTML(r.team || "—")}</td> <td><span class="badge">${escapeHTML(mLabel)}: ${escapeHTML(fmtInt(r.metric))}</span></td> <td>${escapeHTML(fmtMoney(r.vgv))}</td> <td>${escapeHTML(fmtInt(r.sales))}</td> </tr> `).join(""); renderChampions(); } function renderChampions(){ const list = state.champions.slice().reverse(); const el = $("#championsHistory"); if(!list.length){ el.innerHTML = `<p class="muted">Nenhum campeão registrado ainda.</p>`; return; } el.innerHTML = list.slice(0,20).map(c=>` <div class="stat" style="margin-bottom:10px"> <div class="k">${escapeHTML(c.compName)} • ${escapeHTML(c.compType)}</div> <div class="v">🏆 ${escapeHTML(c.champion)}</div> <div class="mini">Período: ${escapeHTML(c.start)} → ${escapeHTML(c.end)} • Registrado: ${escapeHTML(toBRDateTime(c.ts))}</div> </div> `).join(""); } function renderBank(){ const pro = $("#proSelect").value; const w = ensureWallet(pro, state.xp.wallets[canonicalName(pro)]?.team); if(!w){ $("#walletStats").innerHTML = ""; return; } const sumsMonth = walletPeriodSums(w, "month"); const sumsAll = walletPeriodSums(w, "all"); $("#walletStats").innerHTML = ` <div class="stat"><div class="k">Profissional</div><div class="v">${escapeHTML(w.name)}</div></div> <div class="stat"><div class="k">Equipe</div><div class="v">${escapeHTML(w.team || "—")}</div></div> <div class="stat"><div class="k">Saldo atual (XP)</div><div class="v">${escapeHTML(fmtInt(w.balance))}</div></div> <div class="stat"><div class="k">XP ganho (mês)</div><div class="v">${escapeHTML(fmtInt(sumsMonth.gained))}</div></div> <div class="stat"><div class="k">XP perdido (mês)</div><div class="v">${escapeHTML(fmtInt(sumsMonth.lost))}</div></div> <div class="stat"><div class="k">XP ganho (geral)</div><div class="v">${escapeHTML(fmtInt(sumsAll.gained))}</div></div> <div class="stat"><div class="k">XP perdido (geral)</div><div class="v">${escapeHTML(fmtInt(sumsAll.lost))}</div></div> <div class="stat"><div class="k">Base</div><div class="v">${escapeHTML(fmtInt(state.xp.base))}</div></div> `; const tbody = $("#ledgerTable tbody"); tbody.innerHTML = (w.ledger||[]).slice(0,60).map(e=>{ const cls = e.status==="approved" ? "good" : e.status==="rejected" ? "bad" : "warn"; const xp = (e.type==="withdraw" || e.type==="redeem") ? `-${fmtInt(e.amount)}` : (e.type==="deposit") ? `+${fmtInt(e.amount)}` : (e.type==="adjust") ? `${fmtInt(e.amount)} (saldo)` : `${fmtInt(e.amount)}`; return ` <tr> <td>${escapeHTML(toBRDateTime(e.ts))}</td> <td>${escapeHTML(e.type)}</td> <td><span class="badge">${escapeHTML(xp)}</span></td> <td>${escapeHTML(e.reason || "—")}</td> <td>${escapeHTML(e.requester || "—")}</td> <td>${escapeHTML(e.approver || "—")}</td> <td><span class="tag ${cls}">${escapeHTML(e.status)}</span></td> </tr> `; }).join(""); } function renderRules(){ const f = $("#rulesFilter").value; let rules = state.rules.slice(); if(f==="positive") rules = rules.filter(r=>r.type==="positive"); if(f==="negative") rules = rules.filter(r=>r.type==="negative"); if(f==="active") rules = rules.filter(r=>r.status==="active"); if(f==="inactive") rules = rules.filter(r=>r.status==="inactive"); $("#rulesList").innerHTML = rules.map(r=>` <div class="stat" style="margin-bottom:10px"> <div class="k">${escapeHTML(r.type.toUpperCase())} • ${escapeHTML(r.mode.toUpperCase())} • ${escapeHTML(r.status.toUpperCase())}</div> <div class="v">${escapeHTML(r.name)} <span class="badge" style="margin-left:8px">${r.type==="positive"?"+":"-"}${escapeHTML(fmtInt(r.xp))} XP</span></div> <div class="mini">Quem aplica: ${escapeHTML(r.who || "—")} • ${escapeHTML(r.desc || "—")}</div> </div> `).join("") || `<p class="muted">Sem regras para este filtro.</p>`; } function renderShop(){ const grid = $("#shopGrid"); grid.innerHTML = state.prizes.map(p=>{ const disabled = p.status!=="active" || p.qty<=0; return ` <div class="stat" style="min-height:140px;display:flex;flex-direction:column;justify-content:space-between"> <div> <div class="k">${escapeHTML(p.status.toUpperCase())} • QTD: ${escapeHTML(fmtInt(p.qty))}</div> <div class="v">${escapeHTML(p.name)}</div> <div class="mini">Custo: <b>${escapeHTML(fmtInt(p.cost))} XP</b></div> </div> <div class="row" style="justify-content:flex-end"> <button class="btn small ${disabled?'':'primary'}" data-prize="${escapeHTML(p.id)}" ${disabled?'disabled':''}>Solicitar troca</button> </div> </div> `; }).join("");
-$$("button[data-prize]", grid).forEach(btn=>{
-    btn.onclick = ()=>{
-      const id = btn.getAttribute("data-prize");
-      const p = state.prizes.find(x=>x.id===id);
-      const pro = $("#proSelect").value;
-      if(!pro){ toast("Selecione um profissional no Banco XP para solicitar."); return; }
-      if(!p || p.status!=="active" || p.qty<=0){ toast("Prêmio indisponível."); return; }
-
-      const w = ensureWallet(pro, "");
-      if(w.balance < p.cost){
-        toast(`Saldo insuficiente. Você tem ${fmtInt(w.balance)} XP e precisa de ${fmtInt(p.cost)} XP.`);
-        return;
-      }
-
-      // create pending redeem entry
-      addLedger(pro, {
-        id: crypto.randomUUID(),
-        ts: nowISO(),
-        type: "redeem",
-        amount: p.cost,
-        reason: `Troca por prêmio: ${p.name}`,
-        requester: canonicalName(pro),
-        approver: "",
-        status: "pending",
-        ref: { prizeId: p.id, prizeName: p.name }
-      });
-
-      toast("Solicitação criada. Gestor precisa aprovar no Admin.");
-      renderAll();
-    };
-  });
-}
-
-function renderXPRanking(){
-  const period = $("#xpPeriod").value;
-  const team = $("#xpTeam").value;
-
-  const wallets = Object.values(state.xp.wallets || {});
-  const rows = wallets
-    .filter(w => !team || team==="all" ? true : canonicalName(w.team)===canonicalName(team))
-    .map(w=>{
-      const sums = walletPeriodSums(w, period);
-      return {name:w.name, team:w.team, balance:w.balance, gained:sums.gained, lost:sums.lost};
+  const state = {
+    csvText: "",
+    rows: [],        // array de objetos (header -> value)
+    headers: [],
+    delimiter: ",",
+    teamMap: loadJSON(LS_KEYS.teamMap, {}),
+    csvCfg: loadJSON(LS_KEYS.csvCfg, {
+      colProf: "Promotor de marketing",
+      colEquipe: "",   // opcional
+      colData: ""      // opcional
     })
-    .sort((a,b)=> b.balance - a.balance);
+  };
 
-  const tbody = $("#xpTable tbody");
-  tbody.innerHTML = rows.map((r,i)=>`
-    <tr>
-      <td class="pos ${i===0?'p1':i===1?'p2':i===2?'p3':''}">${i+1}</td>
-      <td><b>${escapeHTML(r.name)}</b></td>
-      <td>${escapeHTML(r.team || "—")}</td>
-      <td><span class="badge">${escapeHTML(fmtInt(r.balance))} XP</span></td>
-      <td>${escapeHTML(fmtInt(r.gained))}</td>
-      <td>${escapeHTML(fmtInt(r.lost))}</td>
-    </tr>
-  `).join("") || `<tr><td colspan="6" class="muted">Sem dados.</td></tr>`;
-}
+  // ---------- helpers ----------
+  function $(id){ return document.getElementById(id); }
+  function esc(s){ return String(s ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;"); }
+  function loadJSON(key, fallback){
+    try{
+      const raw = localStorage.getItem(key);
+      if(!raw) return fallback;
+      return JSON.parse(raw);
+    }catch{ return fallback; }
+  }
+  function saveJSON(key, value){ localStorage.setItem(key, JSON.stringify(value)); }
+  function setBadge(ok, text){
+    const b = $("csvBadge");
+    b.className = "badge " + (ok ? "ok" : "bad");
+    b.textContent = text;
+  }
+  function normalizeHeader(h){
+    return String(h ?? "")
+      .trim()
+      .replace(/^\uFEFF/, "")     // BOM
+      .replace(/\s+/g, " ");
+  }
+  function detectDelimiter(text){
+    const firstLines = text.split(/\r?\n/).slice(0, 5).join("\n");
+    const candidates = [",",";","\t","|"];
+    const scores = candidates.map(d => {
+      const lines = firstLines.split(/\r?\n/).filter(l => l.trim().length);
+      const counts = lines.map(l => (l.split(d).length - 1));
+      const avg = counts.reduce((a,b)=>a+b,0) / Math.max(1, counts.length);
+      return {d, avg};
+    }).sort((a,b)=>b.avg-a.avg);
+    return scores[0].avg > 0 ? scores[0].d : ",";
+  }
 
-function renderAdmin(){
-  // fill selects
-  $("#adminPro").innerHTML = pros.map(p=>`<option value="${escapeHTML(p)}">${escapeHTML(p)}</option>`).join("");
-  $("#closeCompSelect").innerHTML = state.competitions.map(c=>`<option value="${escapeHTML(c.id)}">${escapeHTML(c.name)} (${compStatus(c)})</option>`).join("");
+  // CSV parser tolerante (sem libs)
+  function parseCSV(text, delimiter){
+    // suporte básico a aspas
+    const lines = [];
+    let i = 0, field = "", row = [], inQuotes = false;
+    const pushField = () => { row.push(field); field = ""; };
+    const pushRow = () => { lines.push(row); row = []; };
 
-  // pending
-  const pending = [];
-  for(const w of Object.values(state.xp.wallets||{})){
-    for(const e of (w.ledger||[])){
-      if(e.status==="pending") pending.push({w, e});
+    while(i < text.length){
+      const c = text[i];
+
+      if(inQuotes){
+        if(c === '"'){
+          const next = text[i+1];
+          if(next === '"'){ field += '"'; i += 2; continue; }
+          inQuotes = false; i++; continue;
+        }else{
+          field += c; i++; continue;
+        }
+      } else {
+        if(c === '"'){ inQuotes = true; i++; continue; }
+        if(c === delimiter){ pushField(); i++; continue; }
+        if(c === "\n"){ pushField(); pushRow(); i++; continue; }
+        if(c === "\r"){ i++; continue; }
+        field += c; i++; continue;
+      }
+    }
+    // flush last
+    pushField();
+    if(row.length > 1 || (row.length === 1 && row[0].trim() !== "")) pushRow();
+
+    // remove trailing empty lines
+    while(lines.length && lines[lines.length-1].every(v => String(v ?? "").trim() === "")) lines.pop();
+
+    if(!lines.length) return { headers: [], rows: [] };
+
+    const headers = lines[0].map(normalizeHeader);
+    const body = lines.slice(1);
+
+    // se cabeçalho "parece" dados (muito vazio), tenta gerar headers genéricos
+    const nonEmptyHeaders = headers.filter(h => h.length).length;
+    const width = Math.max(...lines.map(r => r.length));
+    let finalHeaders = headers;
+
+    if(nonEmptyHeaders === 0){
+      finalHeaders = Array.from({length: width}, (_,k)=>`col_${k+1}`);
+    } else if(headers.length < width){
+      // completa headers faltando
+      finalHeaders = headers.slice();
+      for(let k=headers.length; k<width; k++) finalHeaders.push(`col_${k+1}`);
+    }
+
+    const rows = body.map(r => {
+      const obj = {};
+      for(let k=0; k<finalHeaders.length; k++){
+        obj[finalHeaders[k]] = (r[k] ?? "").trim();
+      }
+      return obj;
+    });
+
+    return { headers: finalHeaders, rows };
+  }
+
+  function uniq(arr){
+    return Array.from(new Set(arr.filter(v => String(v??"").trim().length)));
+  }
+
+  function getProfName(row){
+    const col = state.csvCfg.colProf?.trim();
+    if(!col) return "";
+    return (row[col] ?? "").trim();
+  }
+  function getEquipeFromRow(row){
+    const col = state.csvCfg.colEquipe?.trim();
+    if(col && row[col]) return (row[col] ?? "").trim();
+    // fallback: se não tem coluna de equipe, usa cadastro manual (teamMap) ou assume Promotor
+    const name = getProfName(row);
+    const m = state.teamMap[name];
+    return (m?.equipe ?? "").trim();
+  }
+  function getResolvedTeam(name, row){
+    // prioridade: teamMap cadastrado > coluna do CSV > vazio
+    const m = state.teamMap[name];
+    if(m?.equipe) return m.equipe;
+
+    const fromRow = getEquipeFromRow(row);
+    if(fromRow) return fromRow;
+
+    return ""; // desconhecido
+  }
+  function getResolvedSubteam(name, team){
+    const m = state.teamMap[name];
+    if(team === "Promotor de marketing") return (m?.subequipe ?? "");
+    return "";
+  }
+
+  // ---------- UI: tabs ----------
+  function setTab(tab){
+    for(const el of document.querySelectorAll(".tab")){
+      el.classList.toggle("active", el.dataset.tab === tab);
+    }
+    $("view-ranking").style.display = tab==="ranking" ? "" : "none";
+    $("view-equipes").style.display = tab==="equipes" ? "" : "none";
+    $("view-config").style.display = tab==="config" ? "" : "none";
+    $("view-diagnostico").style.display = tab==="diagnostico" ? "" : "none";
+  }
+  $("tabs").addEventListener("click", (e) => {
+    const t = e.target.closest(".tab");
+    if(!t) return;
+    setTab(t.dataset.tab);
+  });
+
+  // ---------- load CSV ----------
+  async function loadCSV(){
+    setBadge(false, "CARREGANDO...");
+    try{
+      const res = await fetch("./dados.csv", { cache: "no-store" });
+      if(!res.ok) throw new Error(`HTTP ${res.status} ao buscar ./dados.csv`);
+      const text = await res.text();
+      if(!text.trim()) throw new Error("CSV vazio");
+      state.csvText = text;
+
+      state.delimiter = detectDelimiter(text);
+      const parsed = parseCSV(text, state.delimiter);
+      state.headers = parsed.headers;
+      state.rows = parsed.rows;
+
+      setBadge(true, "OK");
+      renderAll();
+      renderCfgHeaders();
+      diag(`OK: CSV carregado (${state.rows.length} linhas de dados). Delimitador detectado: ${JSON.stringify(state.delimiter)}.`);
+    }catch(err){
+      state.csvText = "";
+      state.headers = [];
+      state.rows = [];
+      setBadge(false, "ERRO");
+      renderAll();
+      diagErr(`Falha ao carregar/ler o CSV.\n\nCausa provável:\n- arquivo não está na mesma pasta do index.html, ou nome diferente (dados.csv)\n- GitHub Pages não publicou ainda\n- CSV vazio / encoding estranho\n\nDetalhe técnico:\n${String(err?.message ?? err)}`);
     }
   }
-  const el = $("#pendingList");
-  if(!pending.length){
-    el.innerHTML = `<p class="muted">Sem pendências.</p>`;
-  } else {
-    el.innerHTML = pending
-      .sort((a,b)=> new Date(b.e.ts) - new Date(a.e.ts))
-      .slice(0,40)
-      .map(({w,e})=>`
-        <div class="stat" style="margin-bottom:10px">
-          <div class="k">PENDENTE • ${escapeHTML(w.name)}</div>
-          <div class="v">${escapeHTML(e.reason || e.type)} <span class="badge" style="margin-left:8px">${escapeHTML(fmtInt(e.amount))} XP</span></div>
-          <div class="mini">Solicitado em: ${escapeHTML(toBRDateTime(e.ts))}</div>
-          <div class="row" style="justify-content:flex-end;margin-top:10px">
-            <button class="btn small good" data-approve="${escapeHTML(w.name)}::${escapeHTML(e.id)}">Aprovar</button>
-            <button class="btn small danger" data-reject="${escapeHTML(w.name)}::${escapeHTML(e.id)}">Rejeitar</button>
-          </div>
-        </div>
-      `).join("");
 
-    $$
-("button[data-approve]").forEach(b=>{ b.onclick = ()=>{ if(!requireAdmin()) return; const [name, id] = b.getAttribute("data-approve").split("::"); approveEntry(name, id, canonicalName("GESTOR")); }; });
-$$("button[data-reject]").forEach(b=>{
-      b.onclick = ()=>{
-        if(!requireAdmin()) return;
-        const [name, id] = b.getAttribute("data-reject").split("::");
-        rejectEntry(name, id, canonicalName("GESTOR"));
-      };
-    });
+  // ---------- ranking ----------
+  function renderRanking(){
+    const equipe = $("fltEquipe").value;
+    const sub = $("fltSubequipe").value;
+    const busca = $("fltBusca").value.trim().toLowerCase();
+
+    // agrega linhas por profissional
+    const agg = new Map(); // name -> {name, team, subteam, count}
+    for(const r of state.rows){
+      const name = getProfName(r);
+      if(!name) continue;
+
+      const team = getResolvedTeam(name, r) || "—";
+      const subteam = (team === "Promotor de marketing") ? (getResolvedSubteam(name, team) || "—") : "—";
+
+      if(equipe && team !== equipe) continue;
+      if(sub && (team !== "Promotor de marketing" || subteam !== sub)) continue;
+      if(busca && !name.toLowerCase().includes(busca)) continue;
+
+      const cur = agg.get(name) || { name, team, subteam, count: 0 };
+      cur.count += 1; // 1 linha = 1 casal
+      // atualiza team/subteam se cadastrou depois
+      cur.team = team;
+      cur.subteam = subteam;
+      agg.set(name, cur);
+    }
+
+    const list = Array.from(agg.values()).sort((a,b)=> b.count - a.count || a.name.localeCompare(b.name));
+
+    $("rankingMeta").textContent =
+      `Profissionais: ${list.length} • Linhas consideradas: ${list.reduce((s,x)=>s+x.count,0)} • Coluna do Profissional: ${state.csvCfg.colProf || "(não configurada)"}`;
+
+    const tbody = $("tblRanking");
+    tbody.innerHTML = list.map((x, idx) => `
+      <tr>
+        <td class="mono">${idx+1}</td>
+        <td>${esc(x.name)}</td>
+        <td>${esc(x.team)}</td>
+        <td>${esc(x.subteam)}</td>
+        <td class="right mono">${x.count}</td>
+      </tr>
+    `).join("");
+
+    if(!state.csvCfg.colProf?.trim()){
+      $("rankingMeta").textContent += " • ATENÇÃO: configure a coluna do Profissional em Admin → Config CSV.";
+    }
   }
-}
 
-function approveEntry(name, entryId, approver){
-  const key = canonicalName(name);
-  const w = state.xp.wallets[key];
-  if(!w) return;
-  const e = (w.ledger||[]).find(x=>x.id===entryId);
-  if(!e) return;
+  function renderAll(){
+    renderRanking();
+    renderEquipesAdmin();
+    renderCfgForm();
+  }
 
-  // if redeem, decrement prize qty
-  if(e.type==="redeem" && e.ref?.prizeId){
-    const p = state.prizes.find(x=>x.id===e.ref.prizeId);
-    if(!p || p.qty<=0){
-      toast("Não foi possível aprovar: prêmio sem estoque.");
+  // ---------- equipes admin ----------
+  function renderEquipesAdmin(){
+    $("eqJson").value = JSON.stringify(state.teamMap, null, 2);
+  }
+
+  function applyEquipeSave(){
+    const name = $("eqNome").value.trim();
+    if(!name){
+      alert("Informe o nome do profissional exatamente como aparece no CSV.");
       return;
     }
-    p.qty -= 1;
-  }
+    const equipe = $("eqEquipe").value;
+    let subequipe = $("eqSubequipe").value;
 
-  e.status = "approved";
-  e.approver = approver;
-  recomputeWallet(w);
-  saveState();
-  toast("Aprovado.");
-  renderAll();
-}
-function rejectEntry(name, entryId, approver){
-  const key = canonicalName(name);
-  const w = state.xp.wallets[key];
-  if(!w) return;
-  const e = (w.ledger||[]).find(x=>x.id===entryId);
-  if(!e) return;
-  e.status = "rejected";
-  e.approver = approver;
-  recomputeWallet(w);
-  saveState();
-  toast("Rejeitado.");
-  renderAll();
-}
+    if(equipe !== "Promotor de marketing") subequipe = "";
 
-/** Global stats from CSV */
-function computeGlobalStats(){
-  const total = csvRows.length;
-  const vgv = csvRows.reduce((a,r)=>a+parseMoneyBR(r["Valor vendido"]),0);
-  const vendas = csvRows.reduce((a,r)=>a+(parseMoneyBR(r["Valor vendido"])>0?1:0),0);
-  const cidades = new Set(csvRows.map(r=>canonicalName(r["Cidade"]||"")).filter(Boolean)).size;
-
-  $("#globalStats").innerHTML = `
-    <div class="stat"><div class="k">Atendimentos (linhas)</div><div class="v">${escapeHTML(fmtInt(total))}</div></div>
-    <div class="stat"><div class="k">Vendas</div><div class="v">${escapeHTML(fmtInt(vendas))}</div></div>
-    <div class="stat"><div class="k">VGV (soma)</div><div class="v">${escapeHTML(fmtMoney(vgv))}</div></div>
-    <div class="stat"><div class="k">Cidades</div><div class="v">${escapeHTML(fmtInt(cidades))}</div></div>
-  `;
-}
-
-/** UI helpers */
-function escapeHTML(s){
-  return String(s).replace(/[&<>"']/g, m=>({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-  })[m]);
-}
-function trunc(s,n){ return s.length>n ? s.slice(0,n-1)+"…" : s; }
-
-function fillSelects(){
-  // competitions
-  $("#competitionSelect").innerHTML = state.competitions.map(c=>`
-    <option value="${escapeHTML(c.id)}">${escapeHTML(c.name)} • ${escapeHTML(c.type)}</option>
-  `).join("");
-  if(!$("#competitionSelect").value && state.competitions[0]){
-    $("#competitionSelect").value = state.competitions[0].id;
-  }
-
-  // pros
-  $("#proSelect").innerHTML = pros.map(p=>`<option value="${escapeHTML(p)}">${escapeHTML(p)}</option>`).join("");
-  $("#adminPro").innerHTML = pros.map(p=>`<option value="${escapeHTML(p)}">${escapeHTML(p)}</option>`).join("");
-
-  // teams for xp filter
-  $("#xpTeam").innerHTML = `<option value="all">Todas</option>` + teams.map(t=>`<option value="${escapeHTML(t)}">${escapeHTML(t)}</option>`).join("");
-}
-
-function renderAll(){
-  $("#tagNow").textContent = new Date().toLocaleString("pt-BR");
-  computeGlobalStats();
-  fillSelects();
-  renderArena();
-  renderBank();
-  renderRules();
-  renderShop();
-  renderXPRanking();
-  renderAdmin();
-}
-
-/** Load CSV */
-async function loadCSV(){
-  try{
-    $("#dataStatus").textContent = "Carregando";
-    const res = await fetch(CSV_URL, {cache:"no-store"});
-    if(!res.ok) throw new Error("HTTP "+res.status);
-    const text = await res.text();
-    csvRows = parseCSV(text);
-
-    // professionals: union of Liner + Closer
-    const setPros = new Set();
-    const setTeams = new Set();
-
-    for(const r of csvRows){
-      const l = canonicalName(r["Liner"]||"");
-      const c = canonicalName(r["Closer"]||"");
-      const t = canonicalName(r["Promotor de marketing"]||"");
-      if(l && l!=="SN") setPros.add(l);
-      if(c && c!=="SN") setPros.add(c);
-      if(t) setTeams.add(t);
-
-      // seed wallets lazily for pros
-      if(l && l!=="SN") ensureWallet(l, t);
-      if(c && c!=="SN") ensureWallet(c, t);
-    }
-
-    pros = Array.from(setPros).sort((a,b)=>a.localeCompare(b));
-    teams = Array.from(setTeams).sort((a,b)=>a.localeCompare(b));
-
-    $("#dataStatus").textContent = "OK";
-    $("#dataStatus").style.borderColor = "rgba(53,255,138,.28)";
-    $("#dataStatus").style.background = "rgba(53,255,138,.10)";
-
-    // ensure competition statuses
-    state.competitions.forEach(c=> c.status = compStatus(c));
-    saveState();
-
+    state.teamMap[name] = { equipe, subequipe };
+    saveJSON(LS_KEYS.teamMap, state.teamMap);
     renderAll();
-  }catch(err){
-    $("#dataStatus").textContent = "ERRO";
-    $("#dataStatus").style.borderColor = "rgba(255,75,107,.35)";
-    $("#dataStatus").style.background = "rgba(255,75,107,.10)";
-    toast("Não consegui carregar ./dados.csv. Verifique se o arquivo está na raiz do repositório e se o GitHub Pages está servindo o arquivo.");
-    console.error(err);
-  }
-}
-
-/** Events */
-$("#btnReload").onclick = ()=> loadCSV();
-
-$("#btnResetLocal").onclick = ()=>{
-  if(!confirm("Resetar dados locais (senha, XP, regras, prêmios, competições criadas)?")) return;
-  localStorage.removeItem(LS_KEY);
-  state = loadState();
-  toast("Reset feito. Recarregue o CSV.");
-  loadCSV();
-};
-
-$("#tabs").addEventListener("click",(e)=>{
-  const tab = e.target.closest(".tab");
-  if(!tab) return;
-  $$
-(".tab").forEach(t=>t.classList.remove("active")); tab.classList.add("active"); const name = tab.dataset.tab;
-$$(".section").forEach(s=>s.classList.remove("active"));
-  $("#sec-"+name).classList.add("active");
-});
-
-$("#competitionSelect").onchange = ()=> renderArena();
-$("#periodFilter").onchange = ()=> renderArena();
-
-$("#proSelect").onchange = ()=> renderBank();
-$("#rulesFilter").onchange = ()=> renderRules();
-
-$("#xpPeriod").onchange = ()=> renderXPRanking();
-$("#xpTeam").onchange = ()=> renderXPRanking();
-
-/** Bank actions */
-function promptXP(title){
-  const amount = Number(prompt(title + " — Quantos XP? (número)","50"));
-  if(!Number.isFinite(amount) || amount<=0) return null;
-  const reason = prompt("Motivo","");
-  return {amount: Math.round(amount), reason: reason || ""};
-}
-
-$("#btnDeposit").onclick = ()=>{
-  if(!requireAdmin()) return;
-  const pro = $("#proSelect").value;
-  const x = promptXP("Depositar XP");
-  if(!x) return;
-
-  addLedger(pro,{
-    id: crypto.randomUUID(),
-    ts: nowISO(),
-    type: "deposit",
-    amount: x.amount,
-    reason: x.reason || "Depósito",
-    requester: "GESTOR",
-    approver: "GESTOR",
-    status: "approved"
-  });
-  toast("Depósito realizado.");
-  renderAll();
-};
-
-$("#btnWithdraw").onclick = ()=>{
-  if(!requireAdmin()) return;
-  const pro = $("#proSelect").value;
-  const x = promptXP("Retirar XP");
-  if(!x) return;
-
-  addLedger(pro,{
-    id: crypto.randomUUID(),
-    ts: nowISO(),
-    type: "withdraw",
-    amount: x.amount,
-    reason: x.reason || "Retirada",
-    requester: "GESTOR",
-    approver: "GESTOR",
-    status: "approved"
-  });
-  toast("Retirada realizada.");
-  renderAll();
-};
-
-$("#btnRequestPrize").onclick = ()=>{
-  const pro = $("#proSelect").value;
-  toast("Vá em Loja de Prêmios e clique em ‘Solicitar troca’ no item desejado.");
-};
-
-$("#btnExport").onclick = ()=>{
-  const pro = $("#proSelect").value;
-  const w = state.xp.wallets[canonicalName(pro)];
-  const blob = new Blob([JSON.stringify(w,null,2)],{type:"application/json"});
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = `extrato_${canonicalName(pro).replace(/\s+/g,"_")}.json`;
-  a.click();
-  URL.revokeObjectURL(a.href);
-};
-
-/** Admin: password */
-$("#btnSetPass").onclick = ()=>{
-  const p = ($("#adminPassSet").value || "").trim();
-  if(p.length < 4){
-    toast("Use uma senha com pelo menos 4 caracteres.");
-    return;
-  }
-  state.adminPassHash = hashPass(p);
-  saveState();
-  $("#adminPass").value = p;
-  toast("Senha salva (local).");
-};
-
-/** Admin: competitions create/close */
-$("#btnCreateComp").onclick = ()=>{
-  if(!requireAdmin()) return;
-
-  const name = ($("#cName").value||"").trim();
-  const type = $("#cType").value;
-  const start = ($("#cStart").value||"").trim();
-  const end = ($("#cEnd").value||"").trim();
-  const prize = ($("#cPrize").value||"").trim();
-  const meta = ($("#cMeta").value||"").trim();
-  const teams = ($("#cTeams").value||"").split(",").map(s=>s.trim()).filter(Boolean);
-  const prosIn = ($("#cPros").value||"").split(",").map(s=>s.trim()).filter(Boolean);
-
-  if(!name || !start || !end){
-    toast("Preencha nome, início e fim (YYYY-MM-DD).");
-    return;
+    alert("Salvo.");
   }
 
-  state.competitions.unshift({
-    id: crypto.randomUUID(),
-    name, type, start, end, prize, meta,
-    teams, pros: prosIn,
-    status: "ativa"
-  });
-  saveState();
-  toast("Competição criada.");
-  renderAll();
-};
-
-$("#btnCloseComp").onclick = ()=>{
-  if(!requireAdmin()) return;
-  const id = $("#closeCompSelect").value;
-  const comp = state.competitions.find(c=>c.id===id);
-  if(!comp){ toast("Competição não encontrada."); return; }
-
-  const ranks = computeRanking(comp, "competition");
-  const champion = ranks[0]?.name || "—";
-
-  comp.status = "encerrada";
-
-  state.champions.push({
-    id: crypto.randomUUID(),
-    ts: nowISO(),
-    compId: comp.id,
-    compName: comp.name,
-    compType: comp.type,
-    start: comp.start,
-    end: comp.end,
-    champion
-  });
-  saveState();
-  toast(`Encerrada. Campeão registrado: ${champion}`);
-  renderAll();
-};
-
-/** Admin: XP apply */
-$("#btnAdminApply").onclick = ()=>{
-  if(!requireAdmin()) return;
-  const pro = $("#adminPro").value;
-  const type = $("#adminXpType").value;
-  const val = Number(($("#adminXpValue").value||"").trim());
-  const reason = ($("#adminXpReason").value||"").trim();
-
-  if(type!=="adjust" && (!Number.isFinite(val) || val<=0)){
-    toast("Informe um valor de XP válido.");
-    return;
-  }
-  if(type==="adjust" && (!Number.isFinite(val) || val<0)){
-    toast("Para corrigir saldo, informe um saldo final >= 0.");
-    return;
+  function importNamesFromCSV(){
+    if(!state.rows.length){
+      alert("Carregue o CSV primeiro.");
+      return;
+    }
+    if(!state.csvCfg.colProf?.trim()){
+      alert("Configure a coluna do Profissional primeiro (Admin → Config CSV).");
+      return;
+    }
+    const names = uniq(state.rows.map(r => getProfName(r)));
+    $("eqNomesCsv").value = names.join("\n");
+    alert(`Encontrados ${names.length} nomes na coluna "${state.csvCfg.colProf}".`);
   }
 
-  addLedger(pro,{
-    id: crypto.randomUUID(),
-    ts: nowISO(),
-    type,
-    amount: Math.round(val),
-    reason: reason || (type==="adjust"?"Correção de saldo":"Movimentação"),
-    requester: "GESTOR",
-    approver: "GESTOR",
-    status: "approved"
-  });
-  toast("Aplicado.");
-  renderAll();
-};
-
-/** Admin: add rule/prize */
-$("#btnAddRule").onclick = ()=>{
-  if(!requireAdmin()) return;
-  const name = ($("#rName").value||"").trim();
-  const type = $("#rType").value;
-  const xp = Number(($("#rXP").value||"").trim());
-  const mode = $("#rAuto").value === "auto" ? "auto" : "manual";
-  const who = ($("#rWho").value||"").trim();
-  const status = $("#rStatus").value;
-  const desc = ($("#rDesc").value||"").trim();
-  if(!name || !Number.isFinite(xp) || xp<=0){
-    toast("Preencha nome e XP (>0).");
-    return;
+  // ---------- config ----------
+  function renderCfgForm(){
+    $("cfgColProf").value = state.csvCfg.colProf ?? "";
+    $("cfgColEquipe").value = state.csvCfg.colEquipe ?? "";
+    $("cfgColData").value = state.csvCfg.colData ?? "";
   }
-  state.rules.unshift({id: crypto.randomUUID(), name, type, xp: Math.round(xp), mode, who, desc, status});
-  saveState();
-  toast("Regra adicionada.");
-  renderAll();
-};
+  function renderCfgHeaders(){
+    const ok = $("cfgHeaders");
+    const err = $("cfgHeadersErr");
+    ok.style.display = "none";
+    err.style.display = "none";
 
-$("#btnAddPrize").onclick = ()=>{
-  if(!requireAdmin()) return;
-  const name = ($("#pName").value||"").trim();
-  const cost = Number(($("#pCost").value||"").trim());
-  const qty = Number(($("#pQty").value||"").trim());
-  const status = $("#pStatus").value;
-  if(!name || !Number.isFinite(cost) || cost<=0 || !Number.isFinite(qty) || qty<0){
-    toast("Preencha nome, custo XP (>0) e quantidade (>=0).");
-    return;
-  }
-  state.prizes.unshift({id: crypto.randomUUID(), name, cost: Math.round(cost), qty: Math.round(qty), status});
-  saveState();
-  toast("Prêmio adicionado.");
-  renderAll();
-};
-
-/** Demo: auto XP based on CSV (optional) */
-$("#btnSeedXP").onclick = ()=>{
-  if(!requireAdmin()) return;
-
-  // Apply auto rules based on current selected period (competition filter)
-  const compId = $("#competitionSelect").value;
-  const comp = state.competitions.find(c=>c.id===compId) || state.competitions[0];
-  const rows = rowsForPeriod(csvRows, $("#periodFilter").value, comp);
-
-  const ruleSale = state.rules.find(r=>r.status==="active" && r.mode==="auto" && /venda/i.test(r.name));
-  const ruleQ = state.rules.find(r=>r.status==="active" && r.mode==="auto" && /qualif/i.test(r.name));
-
-  let count = 0;
-
-  for(const r of rows){
-    const team = canonicalName(r["Promotor de marketing"]||"");
-    const vgv = parseMoneyBR(r["Valor vendido"]);
-    const q = canonicalName(r["Qualifica��o"]||r["Qualificação"]||""); // handle encoding
-    const liner = canonicalName(r["Liner"]||"");
-    const closer = canonicalName(r["Closer"]||"");
-
-    // add for liner and closer
-    const targets = [liner, closer].filter(n=>n && n!=="SN");
-    for(const t of targets){
-      ensureWallet(t, team);
-      if(ruleSale && vgv>0){
-        addLedger(t,{
-          id: crypto.randomUUID(),
-          ts: nowISO(),
-          type:"deposit",
-          amount: ruleSale.xp,
-          reason:`Auto: ${ruleSale.name}`,
-          requester:"SISTEMA",
-          approver:"GESTOR",
-          status:"approved"
-        });
-        count++;
-      }
-      if(ruleQ && q==="Q"){
-        addLedger(t,{
-          id: crypto.randomUUID(),
-          ts: nowISO(),
-          type:"deposit",
-          amount: ruleQ.xp,
-          reason:`Auto: ${ruleQ.name}`,
-          requester:"SISTEMA",
-          approver:"GESTOR",
-          status:"approved"
-        });
-        count++;
-      }
+    if(state.headers.length){
+      ok.style.display = "";
+      ok.textContent = state.headers.join(" | ");
+    }else{
+      err.style.display = "";
+      err.textContent = "Nenhum cabeçalho detectado ainda. Carregue o CSV para listar as colunas.";
     }
   }
+  function saveCfg(){
+    state.csvCfg = {
+      colProf: $("cfgColProf").value.trim(),
+      colEquipe: $("cfgColEquipe").value.trim(),
+      colData: $("cfgColData").value.trim()
+    };
+    saveJSON(LS_KEYS.csvCfg, state.csvCfg);
+    renderAll();
+    renderCfgHeaders();
+    alert("Configuração salva.");
+  }
 
-  toast(`XP automático aplicado (demo). Movimentos criados: ${count}`);
+  function autoDetectCfg(){
+    if(!state.headers.length){
+      alert("Carregue o CSV primeiro.");
+      return;
+    }
+    const H = state.headers;
+
+    const pick = (cands) => {
+      const lower = H.map(h => h.toLowerCase());
+      for(const c of cands){
+        const idx = lower.findIndex(h => h === c || h.includes(c));
+        if(idx >= 0) return H[idx];
+      }
+      return "";
+    };
+
+    // tenta achar coluna do profissional
+    const colProf = pick([
+      "promotor de marketing",
+      "profissional",
+      "responsável",
+      "responsavel",
+      "colaborador",
+      "vendedor",
+      "nome"
+    ]) || state.csvCfg.colProf;
+
+    const colEquipe = pick([
+      "cargo",
+      "função",
+      "funcao",
+      "equipe",
+      "papel"
+    ]) || state.csvCfg.colEquipe;
+
+    const colData = pick([
+      "data",
+      "criado",
+      "created",
+      "dt"
+    ]) || state.csvCfg.colData;
+
+    $("cfgColProf").value = colProf;
+    $("cfgColEquipe").value = colEquipe;
+    $("cfgColData").value = colData;
+
+    alert("Sugestão preenchida. Clique em “Salvar configuração” para aplicar.");
+  }
+
+  // ---------- diagnostico ----------
+  function diag(msg){
+    $("diagOut").innerHTML = `<div class="okbox">${esc(msg)}</div>`;
+  }
+  function diagErr(msg){
+    $("diagOut").innerHTML = `<div class="errbox">${esc(msg)}</div>`;
+  }
+  function showSample(){
+    if(!state.csvText){
+      diagErr("Sem CSV carregado.");
+      return;
+    }
+    const lines = state.csvText.split(/\r?\n/).slice(0, 11).join("\n");
+    $("diagSample").style.display = "";
+    $("diagSample").textContent = lines;
+  }
+
+  // ---------- events ----------
+  $("btnReload").addEventListener("click", loadCSV);
+
+  $("btnReset").addEventListener("click", () => {
+    if(!confirm("Isso vai apagar configurações locais (equipes/subequipes e config CSV). Continuar?")) return;
+    localStorage.removeItem(LS_KEYS.teamMap);
+    localStorage.removeItem(LS_KEYS.csvCfg);
+    state.teamMap = {};
+    state.csvCfg = { colProf: "Promotor de marketing", colEquipe: "", colData: "" };
+    renderAll();
+    alert("Reset concluído.");
+  });
+
+  $("fltEquipe").addEventListener("change", renderRanking);
+  $("fltSubequipe").addEventListener("change", renderRanking);
+  $("fltBusca").addEventListener("input", renderRanking);
+
+  $("btnSalvarEquipe").addEventListener("click", applyEquipeSave);
+  $("btnImportarNomes").addEventListener("click", importNamesFromCSV);
+
+  $("btnAplicarJson").addEventListener("click", () => {
+    try{
+      const obj = JSON.parse($("eqJson").value || "{}");
+      state.teamMap = obj;
+      saveJSON(LS_KEYS.teamMap, state.teamMap);
+      renderAll();
+      alert("Aplicado.");
+    }catch(e){
+      alert("JSON inválido: " + (e?.message || e));
+    }
+  });
+
+  $("btnLimparEq").addEventListener("click", () => {
+    if(!confirm("Limpar todos os cadastros de equipe/subequipe?")) return;
+    state.teamMap = {};
+    saveJSON(LS_KEYS.teamMap, state.teamMap);
+    renderAll();
+  });
+
+  $("btnSalvarCfg").addEventListener("click", saveCfg);
+  $("btnAutoDetect").addEventListener("click", autoDetectCfg);
+
+  $("btnTestCsv").addEventListener("click", loadCSV);
+  $("btnShowSample").addEventListener("click", showSample);
+
+  // ---------- boot ----------
   renderAll();
-};
-
-/** Init */
-(function init(){
-  $("#tagNow").textContent = new Date().toLocaleString("pt-BR");
-  // set live tag based on time
-  setInterval(()=> $("#tagNow").textContent = new Date().toLocaleString("pt-BR"), 1000);
-
+  renderCfgHeaders();
   loadCSV();
 })();
 </script>
