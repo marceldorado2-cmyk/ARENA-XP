@@ -1,258 +1,1258 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Arena SX • Competição • Resultado • Evolução</title>
-  <style>
-    :root {
-      --bg-primário: #0a0a0a;
-      --bg-secundário: #111111;
-      --bg-card: rgba(255,255,255,0.08);
-      --bg-card-hover: rgba(255,255,255,0.12);
-      --destaque: #00fff2;
-      --brilho-destaque: rgba(0,212,255,0.3);
-      --sucesso: #00ff88;
-      --aviso: #ffaa00;
-      --perigo: #ff4444;
-      --texto: #ffffff;
-      --texto-silenciado: #888888;
-    }
-    body {
-      background: var(--bg-primário);
-      color: var(--texto);
-      font-family: 'Segoe UI', Arial, sans-serif;
-      margin: 0; padding: 0;
-    }
-    .container {
-      max-width: 900px;
-      margin: 48px auto;
-      background: var(--bg-secundário);
-      border-radius: 10px;
-      box-shadow: 0 0 15px #0008;
-      padding: 28px 32px;
-    }
-    h1 { color: var(--destaque); margin-bottom: 8px; }
-    h2 { color: var(--sucesso);}
-    button, select, input[type=file] {
-      background: var(--bg-card);
-      color: var(--texto);
-      border: 1px solid var(--bg-card-hover);
-      border-radius: 4px;
-      padding: 7px 16px;
-      margin: 6px 0;
-    }
-    table {
-      width: 100%; margin: 18px 0;
-      border-collapse: collapse;
-      background: var(--bg-card);
-      border-radius: 6px;
-      overflow: hidden;
-    }
-    th, td { font-size: 16px; padding: 8px; text-align: left; }
-    th { background: var(--bg-card-hover); color: var(--destaque);}
-    tr:nth-child(even){ background: #1a1a1a;}
-    .desligado { color: var(--texto-silenciado) !important; text-decoration: line-through;}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arena SX • Competição • Resultado • Evolução</title>
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-card: rgba(255,255,255,0.08);
+            --bg-card-hover: rgba(255,255,255,0.12);
+            --accent: #00d4ff;
+            --accent-glow: rgba(0,212,255,0.3);
+            --success: #00ff88;
+            --warning: #ffaa00;
+            --danger: #ff4444;
+            --text: #ffffff;
+            --text-muted: #888888;
+            --border: rgba(255,255,255,0.15);
+            --shadow: 0 8px 32px rgba(0,0,0,0.4);
+            --radius: 12px;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-main);
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header */
+        .header {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(20px);
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, var(--accent), var(--success));
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            color: var(--bg-primary);
+        }
+        
+        .title-area h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+            background: linear-gradient(45deg, var(--accent), var(--success));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .title-area p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, var(--accent), #0088cc);
+            color: white;
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(45deg, var(--danger), #cc0000);
+            color: white;
+        }
+        
+        .btn-success {
+            background: linear-gradient(45deg, var(--success), #00cc44);
+            color: var(--bg-primary);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        /* Status Badge */
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-success {
+            background: var(--success);
+            color: var(--bg-primary);
+        }
+        
+        .status-danger {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .status-warning {
+            background: var(--warning);
+            color: var(--bg-primary);
+        }
+        
+        /* Layout Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            height: fit-content;
+            backdrop-filter: blur(20px);
+            box-shadow: var(--shadow);
+        }
+        
+        .sidebar h3 {
+            margin-bottom: 20px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .tab {
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tab:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--accent);
+        }
+        
+        .tab.active {
+            background: linear-gradient(45deg, var(--accent), #0088cc);
+            color: white;
+            border-color: var(--accent);
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+        
+        /* Main Content */
+        .main-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 30px;
+            backdrop-filter: blur(20px);
+            box-shadow: var(--shadow);
+            min-height: 600px;
+        }
+        
+        .content-section {
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .content-section h2 {
+            margin-bottom: 25px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 22px;
+        }
+        
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
+        }
+        
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Filters */
+        .filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(255,255,255,0.03);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .filter-group label {
+            color: var(--text-muted);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .filter-group select,
+        .filter-group input {
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg-secondary);
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        
+        .filter-group select:focus,
+        .filter-group input:focus {
+            border-color: var(--accent);
+        }
+        
+        /* Tables */
+        .table-container {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: rgba(255,255,255,0.02);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+        
+        tr:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .rank {
+            font-weight: bold;
+            color: var(--accent);
+        }
+        
+        .rank-1 { color: #ffd700; }
+        .rank-2 { color: #c0c0c0; }
+        .rank-3 { color: #cd7f32; }
+        
+        /* Forms */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .form-group label {
+            color: var(--text-muted);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg-secondary);
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent);
+        }
+        
+        /* Error/Success Messages */
+        .message {
+            padding: 15px;
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .message-success {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+        
+        .message-error {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+        }
+        
+        .message-info {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+        }
+        
+        /* Loading */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: var(--text-muted);
+        }
+        
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-top: 2px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .main-content {
+                padding: 20px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+            
+            .filters {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Admin Tools */
+        .admin-section {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid var(--danger);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .admin-section h4 {
+            color: var(--danger);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Data Table Enhancement */
+        .data-meta {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255,255,255,0.03);
+            border-radius: var(--radius);
+        }
+        
+        /* Team Badges */
+        .team-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .team-promotor { background: #ff6b35; color: white; }
+        .team-liner { background: #f7931e; color: white; }
+        .team-closer { background: #00d4ff; color: var(--bg-primary); }
+        .team-parque { background: #00ff88; color: var(--bg-primary); }
+        .team-externa { background: #8a2be2; color: white; }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Arena SX</h1>
-    <p>Resultados e Evolução de desempenho.</p>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-area">
+                <div class="logo">SX</div>
+                <div class="title-area">
+                    <h1>Arena SX</h1>
+                    <p>Competição • Resultado • Evolução</p>
+                </div>
+            </div>
+            
+            <div class="header-actions">
+                <div id="csvStatus" class="status-badge status-danger">CSV: ERRO</div>
+                <button id="btnRecarregar" class="btn btn-primary">🔄 Recarregar CSV</button>
+                <button id="btnReset" class="btn btn-danger">⚠️ Resetar Dados</button>
+            </div>
+        </header>
 
-    <input id="fileInput" type="file" accept=".csv">
-    <button id="btnRecarregar">Importar/Atualizar CSV</button>
-    <hr>
+        <div class="main-grid">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <h3>🎮 Módulos</h3>
+                <nav class="tabs">
+                    <div class="tab active" data-tab="dashboard">
+                        📊 Dashboard
+                    </div>
+                    <div class="tab" data-tab="ranking">
+                        🏆 Ranking
+                    </div>
+                    <div class="tab" data-tab="competicoes">
+                        🎯 Competições
+                    </div>
+                    <div class="tab" data-tab="equipes">
+                        👥 Equipes
+                    </div>
+                    <div class="tab" data-tab="admin">
+                        ⚙️ Admin
+                    </div>
+                    <div class="tab" data-tab="diagnostico">
+                        🔧 Diagnóstico
+                    </div>
+                </nav>
+            </aside>
 
-    <!-- RESUMO/DASHBOARD -->
-    <div id="dashboard"></div>
-    <!-- RANKING -->
-    <div id="ranking"></div>
-    <!-- Subequipe/Equipe -->
-    <div id="subequipes"></div>
-    <!-- Diagnóstico Detalhes -->
-    <div id="diagnostico"></div>
-  </div>
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Dashboard -->
+                <section id="dashboard" class="content-section active">
+                    <h2>📊 Dashboard Geral</h2>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalCasais">0</div>
+                            <div class="stat-label">Total de Casais</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalPromotor">0</div>
+                            <div class="stat-label">Promotores</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalLiner">0</div>
+                            <div class="stat-label">Liners</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalCloser">0</div>
+                            <div class="stat-label">Closers</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalVGV">R$ 0</div>
+                            <div class="stat-label">VGV Total</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalCidades">0</div>
+                            <div class="stat-label">Cidades</div>
+                        </div>
+                    </div>
 
-  <script>
-    // ======= CONFIG E UTILS =======
-    const estado = {
-      csv: [],
-      processed: [],
-      subequipeConfig: JSON.parse(localStorage.getItem('arena_subequipes')||'{}'),
-      competicoes: JSON.parse(localStorage.getItem('arena_competicoes')||'[]'),
-      loaded:false,
-      errorsCount:0,
-      desligados: JSON.parse(localStorage.getItem('arena_desligados')||'[]')
-    }
+                    <div id="dashboardMessage" class="data-meta">
+                        Carregando dados do CSV...
+                    </div>
+                </section>
 
-    function normalizarNome(nome) {
-      return (nome || '')
-        .toString()
-        .trim()
-        .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-        .replace(/\s+/g,' ')
-        .toUpperCase()
-    }
+                <!-- Ranking -->
+                <section id="ranking" class="content-section">
+                    <h2>🏆 Ranking de Casais</h2>
+                    
+                    <div class="filters">
+                        <div class="filter-group">
+                            <label>Equipe</label>
+                            <select id="filtroEquipe">
+                                <option value="todas">Todas</option>
+                                <option value="Promotor de marketing">Promotor de Marketing</option>
+                                <option value="Liner">Liner</option>
+                                <option value="Closer">Closer</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Subequipe (Promotor)</label>
+                            <select id="filtroSubequipe">
+                                <option value="todas">Todas</option>
+                                <option value="Equipe Parque">Equipe Parque</option>
+                                <option value="Equipe Externa">Equipe Externa</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Período</label>
+                            <select id="filtroPeriodo">
+                                <option value="todos">Todos</option>
+                                <option value="mes">Último Mês</option>
+                                <option value="semana">Última Semana</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Buscar Profissional</label>
+                            <input type="text" id="buscaProfissional" placeholder="Digite o nome...">
+                        </div>
+                    </div>
 
-    // Lista mestre dos profissionais desligados
-    const DESLIGADOS_PADRAO = [
-      'LUAN DOS SANTOS S. FIRMINO',
-      'SERGIO CEZAR DA SILVA',
-      'TASSIANE RENATA MUGNOLI',
-      'IGOR SENA DOS SANTOS',
-      'ROBSON ALLAN DO NASCIMENTO',
-      'FRANCISCO HERMESON BATISTA DOS',
-      'AMANDA CONCEICAO DA COSTA',
-      'AGNALDO FIRMINO JUNIOR',
-      'NICK VITORIA',
-      'MARCELO HENRIQUE DE CAMPOS',
-      // Liners/Closers citados
-      'JESSICA DE LIMA RIBEIRO',
-      'WILLIAN LUIZ DA SILVA XAVIER',
-      'FABIO BRANCALION DOS ANJOS',
-      'GUSTAVO CARDOSO WEBER',
-      'ENZO VINICIUS',
-      'MEG LOIOLA',
-      'GABRIELLA FURTADO',
-      'GUILHERME SANTOS BATISTA',
-      'SILVIA REGINA',
-      'SARA DE JESUS SILVA',
-      'ALEX FONSECA VIVIAN',
-      'RAMON SILVEIRA PINHEIRO',
-      'FABRICIO LELIS BIGNARDI',
-      'MARCOS ANTONIO DE MEIRA',
-      'ANTONIO CARVALHO',
-      'CLARA PINHEIRO',
-      'MARCIO ALFAIA',
-      'MARCIO DENNEY',
-      'SN'
-    ].map(normalizarNome)
+                    <div class="data-meta" id="rankingMeta">
+                        Aguardando dados...
+                    </div>
 
-    function garantirDesligadosPadrao() {
-      const atual = new Set((estado.desligados||[]).map(normalizarNome))
-      DESLIGADOS_PADRAO.forEach(n => atual.add(n))
-      estado.desligados = [...atual].sort()
-      localStorage.setItem('arena_desligados', JSON.stringify(estado.desligados))
-    }
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Profissional</th>
+                                    <th>Equipe</th>
+                                    <th>Subequipe</th>
+                                    <th>Casais</th>
+                                    <th>VGV</th>
+                                </tr>
+                            </thead>
+                            <tbody id="rankingTable">
+                                <tr>
+                                    <td colspan="6" class="loading">
+                                        <div class="spinner"></div>
+                                        Carregando dados...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
 
-    function estaDesligado(nomeProfissional) {
-      const n = normalizarNome(nomeProfissional)
-      if(!n) return false
-      return (estado.desligados||[]).map(normalizarNome).includes(n)
-    }
+                <!-- Competições -->
+                <section id="competicoes" class="content-section">
+                    <h2>🎯 Gerenciar Competições</h2>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nome da Competição</label>
+                            <input type="text" id="nomeCompeticao" placeholder="Ex: Batalha de Dezembro">
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo</label>
+                            <select id="tipoCompeticao">
+                                <option value="casais">Por Casais</option>
+                                <option value="vgv">Por VGV</option>
+                                <option value="equipe">Por Equipe</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Data Início</label>
+                            <input type="date" id="dataInicio">
+                        </div>
+                        <div class="form-group">
+                            <label>Data Fim</label>
+                            <input type="date" id="dataFim">
+                        </div>
+                    </div>
+                    
+                    <button id="btnCriarCompeticao" class="btn btn-success">➕ Criar Competição</button>
 
-    // ========== CSV FILE READER ============
-    document.getElementById('fileInput').addEventListener('change', carregarCSV)
-    document.getElementById('btnRecarregar').addEventListener('click', carregarCSV)
+                    <div id="competicoesLista" style="margin-top: 30px;">
+                        <!-- Lista de competições será gerada aqui -->
+                    </div>
+                </section>
 
-    function carregarCSV() {
-      const file = document.getElementById('fileInput').files[0]
-      if (!file) {
-        alert("Escolha um arquivo CSV válido.")
-        return
-      }
-      const reader = new FileReader()
-      reader.onload = function(e) {
-        const texto = e.target.result
-        estado.csv = parseCSV(texto)
-        processarDados()
-      }
-      reader.readAsText(file)
-    }
+                <!-- Equipes -->
+                <section id="equipes" class="content-section">
+                    <h2>👥 Configurar Subequipes</h2>
+                    
+                    <div class="message message-info">
+                        <strong>Info:</strong> Configure aqui a subequipe dos Promotores de Marketing (Parque ou Externa).
+                    </div>
 
-    // ========== PARSE CSV (básico, para demo) ============
-    function parseCSV(text) {
-      const linhas = text.trim().split('\n');
-      const cabecalho = linhas[0].split(',').map(h=>h.trim());
-      return linhas.slice(1).map((linha) => {
-        const partes = linha.split(',');
-        let obj = {};
-        cabecalho.forEach((chave,i)=>{ obj[chave]=partes[i]||"" })
-        return obj;
-      });
-    }
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Profissional</label>
+                            <select id="profissionalSelect">
+                                <option value="">Selecione um promotor...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Subequipe</label>
+                            <select id="subequipeSelect">
+                                <option value="Equipe Parque">Equipe Parque</option>
+                                <option value="Equipe Externa">Equipe Externa</option>
+                            </select>
+                        </div>
+                    </div>
 
-    // ======= PROCESSAMENTO DE DADOS COM FILTRO =======
-    function processarDados() {
-      if(!estado.csv.length) return;
-      garantirDesligadosPadrao()
+                    <button id="btnSalvarSubequipe" class="btn btn-success">💾 Salvar Configuração</button>
 
-      const base = estado.csv.map(l=>{
-        const equipe=obterEquipe(l)
-        const subequipe=equipe.tipo==='Promotor de marketing'?getSubequipe(equipe.nome):''
-        return {
-          ...l,
-          equipe:equipe.tipo,
-          profissional:equipe.nome,
-          subequipe:subequipe,
-          valorVendido:parseValorBR(l['Valor vendido']),
-          cidade:l['Cidade']
+                    <div id="subequipesConfig" style="margin-top: 30px;">
+                        <!-- Configurações atuais serão mostradas aqui -->
+                    </div>
+                </section>
+
+                <!-- Admin -->
+                <section id="admin" class="content-section">
+                    <h2>⚙️ Área Administrativa</h2>
+                    
+                    <div class="admin-section">
+                        <h4>⚠️ Configurações Avançadas</h4>
+                        
+                        <div class="form-group">
+                            <label>Exportar Dados (JSON)</label>
+                            <textarea id="dadosExportados" rows="10" style="font-family: monospace; font-size: 12px;" readonly></textarea>
+                        </div>
+                        
+                        <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 15px;">
+                            <button id="btnExportar" class="btn btn-primary">📤 Gerar Export</button>
+                            <button id="btnResetCompleto" class="btn btn-danger">🗑️ Reset Completo</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Diagnóstico -->
+                <section id="diagnostico" class="content-section">
+                    <h2>🔧 Diagnóstico do Sistema</h2>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number" id="diagLinhas">0</div>
+                            <div class="stat-label">Linhas Processadas</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="diagErros">0</div>
+                            <div class="stat-label">Linhas com Erro</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="diagTamanho">0 KB</div>
+                            <div class="stat-label">Tamanho do CSV</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="diagEncoding">?</div>
+                            <div class="stat-label">Encoding</div>
+                        </div>
+                    </div>
+
+                    <div id="diagnosticoDetalhes">
+                        <!-- Detalhes do diagnóstico serão mostrados aqui -->
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Toast de notificações -->
+    <div id="toast" style="position: fixed; top: 20px; right: 20px; z-index: 1000; display: none;">
+        <div class="message" id="toastContent"></div>
+    </div>
+
+    <script>
+        // Estado Global da Aplicação
+        const ArenaState = {
+            csvData: [],
+            processedData: [],
+            subequipesConfig: JSON.parse(localStorage.getItem('arena_subequipes') || '{}'),
+            competicoes: JSON.parse(localStorage.getItem('arena_competicoes') || '[]'),
+            isLoaded: false
+        };
+
+        // Utilitários
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            const content = document.getElementById('toastContent');
+            
+            content.className = `message message-${type}`;
+            content.textContent = message;
+            toast.style.display = 'block';
+            
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 5000);
         }
-      })
 
-      // FILTRO DOS DESLIGADOS
-      estado.processed = base.filter(r => !estaDesligado(r.profissional))
-      atualizarDashboard()
-      atualizarRanking()
-      atualizarSubequipeUI()
-      atualizarDiagnosticoDetalhes()
-    }
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(value || 0);
+        }
 
-    // ======= FUNÇÕES DE ATUALIZAÇÃO (exemplo simples para demo) =======
-    function atualizarRanking() {
-      // Exemplo: simples tabela de ranking por valor vendido
-      const arr = estado.processed.slice().sort((a,b)=>b.valorVendido-a.valorVendido)
-      let html = "<h2>Ranking (Apenas Ativos)</h2><table><tr><th>Profissional</th><th>Valor vendido</th></tr>"
-      arr.forEach(l => {
-        html += `<tr><td>${l.profissional}</td><td>R$ ${l.valorVendido.toLocaleString('pt-BR', {minimumFractionDigits:2})}</td></tr>`
-      })
-      html += "</table>"
-      document.getElementById('ranking').innerHTML = html
-    }
-    function atualizarDashboard() {
-      // Exemplo: valor total
-      let total = estado.processed.reduce((soma, r) => soma + r.valorVendido, 0)
-      document.getElementById('dashboard').innerHTML =
-        `<h2>Dashboard</h2>
-         <b>Total vendido (Ativos):</b> R$ ${(total).toLocaleString('pt-BR', {minimumFractionDigits:2})}`
-    }
-    function atualizarSubequipeUI() {
-      // Mostra lista das subequipes, só dos ativos
-      let grupos = {}
-      estado.processed.forEach(r => {
-        if(!grupos[r.subequipe]) grupos[r.subequipe]=[]
-        grupos[r.subequipe].push(r.profissional)
-      })
-      let html = "<h2>Subequipes (Apenas Ativos)</h2>"
-      for(const sub in grupos) {
-        html += `<b>${sub||"(Sem subequipe)"}</b>: ${grupos[sub].join(", ")}<br>`
-      }
-      document.getElementById('subequipes').innerHTML = html
-    }
-    function atualizarDiagnosticoDetalhes() {
-      // Diagnóstico simples
-      document.getElementById('diagnostico').innerHTML =
-        `<h2>Diagnóstico</h2>
-         Processados: ${estado.processed.length} registros<br>
-         Total original: ${estado.csv.length} registros`
-    }
+        function parseCSVValue(str) {
+            return (str || '').trim().replace(/"/g, '');
+        }
 
-    // ======= Funções auxiliares =======
-    function obterEquipe(linha) {
-      // Exemplo bobo (ajuste para teu caso)
-      return {
-        tipo: linha['Equipe'] || '',
-        nome: linha['Nome'] || ''
-      }
-    }
-    function getSubequipe(nome) {
-      return estado.subequipeConfig[normalizarNome(nome)]||''
-    }
-    function parseValorBR(valor) {
-      if(!valor) return 0
-      return parseFloat(valor.replace(/\./g,'').replace(',','.'))||0
-    }
-  </script>
+        function parseBRCurrency(str) {
+            if (!str) return 0;
+            const cleaned = str.replace(/[^0-9,.-]/g, '').replace(',', '.');
+            return parseFloat(cleaned) || 0;
+        }
+
+        function determineTeam(row) {
+            // Verifica em qual coluna o profissional aparece
+            if (row['Promotor de marketing']) {
+                return { type: 'Promotor de marketing', name: row['Promotor de marketing'] };
+            } else if (row['Liner']) {
+                return { type: 'Liner', name: row['Liner'] };
+            } else if (row['Closer']) {
+                return { type: 'Closer', name: row['Closer'] };
+            }
+            return { type: 'Desconhecido', name: '' };
+        }
+
+        function getSubequipe(promotorName) {
+            return ArenaState.subequipesConfig[promotorName] || '';
+        }
+
+        // Carregamento e Parse do CSV
+        async function loadCSV() {
+            try {
+                document.getElementById('csvStatus').textContent = 'CARREGANDO...';
+                document.getElementById('csvStatus').className = 'status-badge status-warning';
+
+                const response = await fetch('./dados.csv', { cache: 'no-store' });
+                if (!response.ok) {
+                    throw new Error(`Erro HTTP: ${response.status}`);
+                }
+
+                const text = await response.text();
+                const lines = text.split('\n').filter(line => line.trim());
+
+                if (lines.length < 2) {
+                    throw new Error('CSV vazio ou sem dados');
+                }
+
+                // Parse das linhas (separador ;)
+                const headers = lines[0].split(';').map(h => h.trim());
+                const data = [];
+                let errorLines = 0;
+
+                for (let i = 1; i < lines.length; i++) {
+                    const line = lines[i];
+                    const columns = line.split(';');
+
+                    // Ignora linhas com número incorreto de colunas ou problemas
+                    if (columns.length !== headers.length) {
+                        errorLines++;
+                        console.warn(`Linha ${i + 1} ignorada (colunas inconsistentes):`, line.substring(0, 100));
+                        continue;
+                    }
+
+                    const row = {};
+                    headers.forEach((header, index) => {
+                        row[header] = parseCSVValue(columns[index]);
+                    });
+
+                    data.push(row);
+                }
+
+                ArenaState.csvData = data;
+                ArenaState.isLoaded = true;
+
+                document.getElementById('csvStatus').textContent = 'SUCESSO';
+                document.getElementById('csvStatus').className = 'status-badge status-success';
+
+                processData();
+                updateDiagnostico(lines.length - 1, errorLines, text.length, 'UTF-8');
+                showToast(`CSV carregado com sucesso! ${data.length} registros processados${errorLines > 0 ? `, ${errorLines} linhas ignoradas` : ''}.`, 'success');
+
+            } catch (error) {
+                console.error('Erro ao carregar CSV:', error);
+                document.getElementById('csvStatus').textContent = 'ERRO';
+                document.getElementById('csvStatus').className = 'status-badge status-danger';
+                showToast(`Erro ao carregar CSV: ${error.message}`, 'error');
+                updateDashboard();
+            }
+        }
+
+        // Processamento dos dados
+        function processData() {
+            if (!ArenaState.csvData.length) {
+                return;
+            }
+
+            const processed = ArenaState.csvData.map(row => {
+                const team = determineTeam(row);
+                const subequipe = team.type === 'Promotor de marketing' ? getSubequipe(team.name) : '';
+
+                return {
+                    ...row,
+                    equipe: team.type,
+                    profissional: team.name,
+                    subequipe: subequipe,
+                    valorVendido: parseBRCurrency(row['Valor vendido']),
+                    data: row['Data de atendimento']
+                };
+            });
+
+            ArenaState.processedData = processed;
+            updateDashboard();
+            updateRanking();
+            updateSubequipesUI();
+            updateDiagnosticoDetalhes();
+        }
+
+        // Atualização do Dashboard
+        function updateDashboard() {
+            if (!ArenaState.isLoaded) {
+                document.getElementById('dashboardMessage').textContent = 'Aguardando carregamento do CSV...';
+                return;
+            }
+
+            const data = ArenaState.processedData;
+            const totalCasais = data.length;
+            
+            const promotores = new Set(data.filter(d => d.equipe === 'Promotor de marketing').map(d => d.profissional));
+            const liners = new Set(data.filter(d => d.equipe === 'Liner').map(d => d.profissional));
+            const closers = new Set(data.filter(d => d.equipe === 'Closer').map(d => d.profissional));
+            
+            const totalVGV = data.reduce((sum, row) => sum + (row.valorVendido || 0), 0);
+            const cidades = new Set(data.map(d => d['Cidade']).filter(Boolean));
+
+            document.getElementById('totalCasais').textContent = totalCasais.toLocaleString('pt-BR');
+            document.getElementById('totalPromotor').textContent = promotores.size;
+            document.getElementById('totalLiner').textContent = liners.size;
+            document.getElementById('totalCloser').textContent = closers.size;
+            document.getElementById('totalVGV').textContent = formatCurrency(totalVGV);
+            document.getElementById('totalCidades').textContent = cidades.size;
+
+            document.getElementById('dashboardMessage').textContent = 
+                `Dados atualizados em ${new Date().toLocaleString('pt-BR')}. Base: ${totalCasais} casais processados.`;
+        }
+
+        // Atualização do Ranking
+        function updateRanking() {
+            if (!ArenaState.processedData.length) {
+                document.getElementById('rankingTable').innerHTML = '<tr><td colspan="6">Nenhum dado disponível</td></tr>';
+                return;
+            }
+
+            const filtroEquipe = document.getElementById('filtroEquipe').value;
+            const filtroSubequipe = document.getElementById('filtroSubequipe').value;
+            const busca = document.getElementById('buscaProfissional').value.toLowerCase();
+
+            // Filtrar dados
+            let filteredData = ArenaState.processedData;
+
+            if (filtroEquipe !== 'todas') {
+                filteredData = filteredData.filter(d => d.equipe === filtroEquipe);
+            }
+
+            if (filtroSubequipe !== 'todas') {
+                filteredData = filteredData.filter(d => d.subequipe === filtroSubequipe);
+            }
+
+            if (busca) {
+                filteredData = filteredData.filter(d => 
+                    d.profissional.toLowerCase().includes(busca)
+                );
+            }
+
+            // Agregar por profissional
+            const rankings = {};
+            filteredData.forEach(row => {
+                const prof = row.profissional;
+                if (!prof) return;
+
+                if (!rankings[prof]) {
+                    rankings[prof] = {
+                        profissional: prof,
+                        equipe: row.equipe,
+                        subequipe: row.subequipe,
+                        casais: 0,
+                        vgv: 0
+                    };
+                }
+                rankings[prof].casais++;
+                rankings[prof].vgv += row.valorVendido || 0;
+            });
+
+            // Converter para array e ordenar
+            const rankingArray = Object.values(rankings).sort((a, b) => b.casais - a.casais || b.vgv - a.vgv);
+
+            // Gerar HTML da tabela
+            const tbody = document.getElementById('rankingTable');
+            tbody.innerHTML = rankingArray.map((item, index) => {
+                const rankClass = index === 0 ? 'rank-1' : index === 1 ? 'rank-2' : index === 2 ? 'rank-3' : 'rank';
+                const teamBadge = getTeamBadgeHTML(item.equipe, item.subequipe);
+                
+                return `
+                    <tr>
+                        <td class="${rankClass}">${index + 1}º</td>
+                        <td><strong>${item.profissional}</strong></td>
+                        <td>${teamBadge}</td>
+                        <td>${item.subequipe || '—'}</td>
+                        <td><strong>${item.casais}</strong></td>
+                        <td>${formatCurrency(item.vgv)}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            document.getElementById('rankingMeta').textContent = 
+                `${rankingArray.length} profissionais • ${filteredData.length} casais • Filtros aplicados: ${getActiveFiltersText()}`;
+        }
+
+        function getTeamBadgeHTML(equipe, subequipe) {
+            let badgeClass = 'team-badge ';
+            
+            switch(equipe) {
+                case 'Promotor de marketing':
+                    badgeClass += 'team-promotor';
+                    return `<span class="${badgeClass}">Promotor</span>` + 
+                           (subequipe ? ` <span class="team-badge team-${subequipe.includes('Parque') ? 'parque' : 'externa'}">${subequipe}</span>` : '');
+                case 'Liner':
+                    badgeClass += 'team-liner';
+                    return `<span class="${badgeClass}">Liner</span>`;
+                case 'Closer':
+                    badgeClass += 'team-closer';
+                    return `<span class="${badgeClass}">Closer</span>`;
+                default:
+                    return equipe || '—';
+            }
+        }
+
+        function getActiveFiltersText() {
+            const filters = [];
+            const equipe = document.getElementById('filtroEquipe').value;
+            const subequipe = document.getElementById('filtroSubequipe').value;
+            const busca = document.getElementById('buscaProfissional').value;
+
+            if (equipe !== 'todas') filters.push(`Equipe: ${equipe}`);
+            if (subequipe !== 'todas') filters.push(`Subequipe: ${subequipe}`);
+            if (busca) filters.push(`Busca: "${busca}"`);
+
+            return filters.length ? filters.join(', ') : 'Nenhum';
+        }
+
+        // Gerenciamento de Subequipes
+        function updateSubequipesUI() {
+            // Atualizar select de profissionais
+            const promotores = [...new Set(
+                ArenaState.processedData
+                    .filter(d => d.equipe === 'Promotor de marketing')
+                    .map(d => d.profissional)
+            )].sort();
+
+            const select = document.getElementById('profissionalSelect');
+            select.innerHTML = '<option value="">Selecione um promotor...</option>' +
+                promotores.map(p => `<option value="${p}">${p}</option>`).join('');
+
+            // Mostrar configurações atuais
+            updateSubequipesDisplay();
+        }
+
+        function updateSubequipesDisplay() {
+            const container = document.getElementById('subequipesConfig');
+            const configs = Object.entries(ArenaState.subequipesConfig);
+
+            if (configs.length === 0) {
+                container.innerHTML = '<div class="message message-info">Nenhuma subequipe configurada ainda.</div>';
+                return;
+            }
+
+            container.innerHTML = `
+                <h4>Configurações Atuais:</h4>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Profissional</th>
+                                <th>Subequipe</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${configs.map(([prof, sub]) => `
+                                <tr>
+                                    <td>${prof}</td>
+                                    <td><span class="team-badge team-${sub.includes('Parque') ? 'parque' : 'externa'}">${sub}</span></td>
+                                    <td><button class="btn btn-danger" onclick="removerSubequipe('${prof}')">❌ Remover</button></td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        function salvarSubequipe() {
+            const profissional = document.getElementById('profissionalSelect').value;
+            const subequipe = document.getElementById('subequipeSelect').value;
+
+            if (!profissional) {
+                showToast('Selecione um profissional!', 'error');
+                return;
+            }
+
+            ArenaState.subequipesConfig[profissional] = subequipe;
+            localStorage.setItem('arena_subequipes', JSON.stringify(ArenaState.subequipesConfig));
+
+            processData(); // Reprocessar para aplicar as mudanças
+            showToast(`Subequipe "${subequipe}" configurada para ${profissional}`, 'success');
+
+            // Limpar seleção
+            document.getElementById('profissionalSelect').value = '';
+        }
+
+        function removerSubequipe(profissional) {
+            if (confirm(`Remover configuração de subequipe para ${profissional}?`)) {
+                delete ArenaState.subequipesConfig[profissional];
+                localStorage.setItem('arena_subequipes', JSON.stringify(ArenaState.subequipesConfig));
+                processData();
+                showToast(`Configuração removida para ${profissional}`, 'success');
+            }
+        }
+
+        // Diagnóstico
+        function updateDiagnostico(linhas, erros, tamanho, encoding) {
+            document.getElementById('diagLinhas').textContent = linhas;
+            document.getElementById('diagErros').textContent = erros;
+            document.getElementById('diagTamanho').textContent = Math.round(tamanho / 1024) + ' KB';
+            document.getElementById('diagEncoding').textContent = encoding;
+        }
+
+        function updateDiagnosticoDetalhes() {
+            const container = document.getElementById('diagnosticoDetalhes');
+            
+            if (!ArenaState.processedData.length) {
+                container.innerHTML = '<div class="message message-info">Nenhum dado para diagnóstico.</div>';
+                return;
+            }
+
+            const data = ArenaState.processedData;
+            const agrupadoPorEquipe = {};
+            
+            data.forEach(row => {
+                const equipe = row.equipe;
+                if (!agrupadoPorEquipe[equipe]) {
+                    agrupadoPorEquipe[equipe] = 0;
+                }
+                agrupadoPorEquipe[equipe]++;
+            });
+
+            container.innerHTML = `
+                <h4>Distribuição por Equipe:</h4>
+                <div class="stats-grid">
+                    ${Object.entries(agrupadoPorEquipe).map(([equipe, count]) => `
+                        <div class="stat-card">
+                            <div class="stat-number">${count}</div>
+                            <div class="stat-label">${equipe}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Sistema de Tabs
+        function initTabs() {
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active de todas as tabs
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+                    
+                    // Ativa a tab clicada
+                    tab.classList.add('active');
+                    const targetId = tab.getAttribute('data-tab');
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+        }
+
+        // Event Listeners
+        function initEventListeners() {
+            document.getElementById('btnRecarregar').addEventListener('click', loadCSV);
+            
+            document.getElementById('btnReset').addEventListener('click', () => {
+                if (confirm('Isso irá remover TODAS as configurações salvas (subequipes, competições, etc.). Confirmar?')) {
+                    localStorage.clear();
+                    location.reload();
+                }
+            });
+
+            document.getElementById('btnSalvarSubequipe').addEventListener('click', salvarSubequipe);
+
+            // Filtros do ranking
+            document.getElementById('filtroEquipe').addEventListener('change', updateRanking);
+            document.getElementById('filtroSubequipe').addEventListener('change', updateRanking);
+            document.getElementById('buscaProfissional').addEventListener('input', updateRanking);
+
+            // Admin
+            document.getElementById('btnExportar').addEventListener('click', () => {
+                const exportData = {
+                    subequipesConfig: ArenaState.subequipesConfig,
+                    competicoes: ArenaState.competicoes,
+                    processedData: ArenaState.processedData.slice(0, 10), // Amostra
+                    timestamp: new Date().toISOString()
+                };
+                document.getElementById('dadosExportados').value = JSON.stringify(exportData, null, 2);
+            });
+
+            document.getElementById('btnResetCompleto').addEventListener('click', () => {
+                if (confirm('ATENÇÃO: Isso irá apagar TODOS os dados salvos e recarregar a página. Confirmar?')) {
+                    localStorage.clear();
+                    location.reload();
+                }
+            });
+        }
+
+        // Inicialização
+        function init() {
+            initTabs();
+            initEventListeners();
+            loadCSV();
+            updateDashboard();
+        }
+
+        // Executar quando a página carregar
+        document.addEventListener('DOMContentLoaded', init);
+
+        // Funções globais (chamadas pelos event handlers inline)
+        window.removerSubequipe = removerSubequipe;
+    </script>
 </body>
 </html>
